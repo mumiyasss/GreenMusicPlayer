@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Music Player</string>
+    <string name="channel_name">Player Notification</string>
+    <string name="channel_description">Notification widget for Music Player</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+</resources>
