@@ -130,15 +130,14 @@ class PlayerService : Service() {
     }
 
     private fun createNotificationChannel(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (isOreoPlus()) {
             val name = context.getString(R.string.channel_name)
-            val descriptionText = context.getString(R.string.channel_description)
             val importance = NotificationManager.IMPORTANCE_LOW
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = descriptionText
+                description = getString(R.string.channel_description)
             }
             val notificationManager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }

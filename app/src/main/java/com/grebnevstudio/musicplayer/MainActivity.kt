@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_main.*
 import android.app.Activity
+import com.grebnevstudio.musicplayer.helpers.openFileIntent
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,19 +30,12 @@ class MainActivity : AppCompatActivity() {
             playerViewModel.stopService()
         }
         open_fm_button.setOnClickListener {
-            val openFileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
-                type = "audio/*"
-            }
             startActivityForResult(openFileIntent, READ_REQUEST_CODE)
         }
     }
 
-    public override fun onActivityResult(
-        requestCode: Int, resultCode: Int,
-        resultData: Intent?
-    ) {
-        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+    public override fun onActivityResult(reqCode: Int, resCode: Int, resultData: Intent?) {
+        if (reqCode == READ_REQUEST_CODE && resCode == Activity.RESULT_OK) {
             val uri = resultData?.data
             if (uri != null)
                 playerViewModel.uploadFile(uri)
@@ -49,6 +43,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val READ_REQUEST_CODE = 99;
+        const val READ_REQUEST_CODE = 99
     }
 }
