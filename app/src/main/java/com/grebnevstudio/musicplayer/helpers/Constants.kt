@@ -1,11 +1,7 @@
 package com.grebnevstudio.musicplayer.helpers
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
-import com.grebnevstudio.musicplayer.service.PlayerService
-
-
 
 const val ACTION_STOP_FOREGROUND_SERVICE = "ACTION_STOP_FOREGROUND_SERVICE"
 const val ACTION_NEXT = "ACTION_NEXT"

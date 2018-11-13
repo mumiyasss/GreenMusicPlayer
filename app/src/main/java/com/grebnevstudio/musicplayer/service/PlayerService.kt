@@ -1,23 +1,23 @@
 package com.grebnevstudio.musicplayer.service
 
-import android.app.*
 
-
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.os.IBinder
-import android.content.Context
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Binder
-import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.grebnevstudio.musicplayer.ControlActionsListener
 import com.grebnevstudio.musicplayer.MainActivity
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.helpers.*
-import kotlin.collections.ArrayList
+
 class PlayerService : Service() {
     private lateinit var mediaPlayer: MediaPlayer
     private val mBinder = PlayerServiceBinder()

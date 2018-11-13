@@ -1,14 +1,13 @@
 package com.grebnevstudio.musicplayer
 
+import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import kotlinx.android.synthetic.main.activity_main.*
-import android.app.Activity
 import com.grebnevstudio.musicplayer.helpers.openFileIntent
-
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var playerViewModel: PlayerViewModel

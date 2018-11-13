@@ -7,15 +7,11 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.net.Uri
 import android.os.IBinder
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.grebnevstudio.musicplayer.helpers.ACTION_STOP_FOREGROUND_SERVICE
 import com.grebnevstudio.musicplayer.helpers.showToast
 import com.grebnevstudio.musicplayer.service.PlayerService
-import androidx.core.app.ActivityCompat.startActivityForResult
-
-
 
 class PlayerViewModel(application: Application) : AndroidViewModel(application) {
     val isPlaying = MutableLiveData<Boolean>()

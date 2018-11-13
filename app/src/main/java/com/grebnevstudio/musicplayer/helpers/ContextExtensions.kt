@@ -5,12 +5,6 @@ import android.content.Intent
 import android.widget.Toast
 import com.grebnevstudio.musicplayer.service.PlayerService
 
-
-//fun Context.sendIntent(action: String) {
-//    Intent(this)
-//}
-
-
 fun Context.sendIntent(action: String) {
     Intent(this, PlayerService::class.java).apply {
         this.action = action
