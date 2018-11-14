@@ -1,4 +1,4 @@
-package com.grebnevstudio.musicplayer
+package com.grebnevstudio.musicplayer.viewmodels
 
 import android.app.Application
 import android.content.ComponentName
