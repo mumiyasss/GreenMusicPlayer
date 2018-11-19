@@ -1,21 +1,16 @@
-package com.grebnevstudio.musicplayer
+package com.grebnevstudio.musicplayer.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.grebnevstudio.musicplayer.R
+import com.grebnevstudio.musicplayer.ui.main.MainFragment
 
 class AppActivity : AppCompatActivity() {
 
     fun startScreen(newFragment: Fragment) {
-        val fm = supportFragmentManager
-        var fragment: Fragment? = fm.findFragmentById(R.id.fragment_container)
-
-        if (fragment == null) {
-            fragment = newFragment
-            fm.beginTransaction()
-                .add(R.id.fragment_container, fragment)
-                .commit()
-        }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, newFragment).commit()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

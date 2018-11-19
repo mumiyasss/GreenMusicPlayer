@@ -1,4 +1,4 @@
-package com.grebnevstudio.musicplayer.viewmodels
+package com.grebnevstudio.musicplayer.viewmodel
 
 import android.app.Application
 import android.content.ComponentName
@@ -7,17 +7,21 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.net.Uri
 import android.os.IBinder
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.grebnevstudio.musicplayer.MusicPlayerApp
 import com.grebnevstudio.musicplayer.helpers.ACTION_STOP_FOREGROUND_SERVICE
 import com.grebnevstudio.musicplayer.helpers.showToast
 import com.grebnevstudio.musicplayer.service.PlayerService
+import javax.inject.Inject
 
-class PlayerViewModel(application: Application) : AndroidViewModel(application) {
+class PlayerViewModel : ViewModel() {
     val isPlaying = MutableLiveData<Boolean>()
 
-    private val app = getApplication<Application>()
-    private val serviceIntent = Intent(app, PlayerService::class.java)
+    @Inject
+    lateinit var app: Application
+    @Inject
+    lateinit var serviceIntent: Intent
     private lateinit var mService: PlayerService
     private var isServiceBounded = false
 
@@ -65,6 +69,7 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     init {
+        MusicPlayerApp.component.injectViewModel(this)
         app.bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
         isPlaying.value = false
     }

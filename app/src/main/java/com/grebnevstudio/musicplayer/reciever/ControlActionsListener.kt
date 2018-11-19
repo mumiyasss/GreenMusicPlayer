@@ -1,10 +1,12 @@
-package com.grebnevstudio.musicplayer
+package com.grebnevstudio.musicplayer.reciever
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
-import com.grebnevstudio.musicplayer.helpers.*
+import com.grebnevstudio.musicplayer.helpers.ACTION_NEXT
+import com.grebnevstudio.musicplayer.helpers.ACTION_PLAY_PAUSE
+import com.grebnevstudio.musicplayer.helpers.BroadcastActionNotFound
+import com.grebnevstudio.musicplayer.helpers.sendIntent
 
 class ControlActionsListener : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

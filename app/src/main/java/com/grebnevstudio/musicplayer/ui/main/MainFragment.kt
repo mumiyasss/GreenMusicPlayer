@@ -1,4 +1,4 @@
-package com.grebnevstudio.musicplayer
+package com.grebnevstudio.musicplayer.ui.main
 
 import android.app.Activity
 import android.content.Intent
@@ -9,9 +9,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.helpers.openFileIntent
-import com.grebnevstudio.musicplayer.viewmodels.PlayerViewModel
-import kotlinx.android.synthetic.main.activity_main.view.*
+import com.grebnevstudio.musicplayer.ui.AppActivity
+import com.grebnevstudio.musicplayer.ui.preferences.Fragment1
+import com.grebnevstudio.musicplayer.viewmodel.PlayerViewModel
+import kotlinx.android.synthetic.main.fragment_main.view.*
 
 class MainFragment : Fragment() {
     private lateinit var playerViewModel: PlayerViewModel
@@ -21,7 +24,7 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val globalView = inflater.inflate(R.layout.activity_main, container, false)
+        val globalView = inflater.inflate(R.layout.fragment_main, container, false)
 
         playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
 
@@ -38,7 +41,12 @@ class MainFragment : Fragment() {
                 playerViewModel.stopService()
             }
             open_fm_button.setOnClickListener {
-                startActivityForResult(openFileIntent, READ_REQUEST_CODE)
+                startActivityForResult(openFileIntent,
+                    READ_REQUEST_CODE
+                )
+            }
+            pref_btn.setOnClickListener {
+                (activity as AppActivity).startScreen(Fragment1())
             }
         }
         return globalView

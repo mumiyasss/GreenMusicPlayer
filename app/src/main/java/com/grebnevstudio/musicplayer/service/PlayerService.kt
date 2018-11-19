@@ -12,10 +12,10 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Binder
 import androidx.core.app.NotificationCompat
-import com.grebnevstudio.musicplayer.ControlActionsListener
-import com.grebnevstudio.musicplayer.MainActivity
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.helpers.*
+import com.grebnevstudio.musicplayer.reciever.ControlActionsListener
+import com.grebnevstudio.musicplayer.ui.main.MainFragment
 
 class PlayerService : Service() {
     private lateinit var mediaPlayer: MediaPlayer
@@ -111,7 +111,7 @@ class PlayerService : Service() {
     }
 
     private fun getContentIntent(): PendingIntent {
-        val contentIntent = Intent(this, MainActivity::class.java)
+        val contentIntent = Intent(this, MainFragment::class.java)
         return PendingIntent.getActivity(this, 0, contentIntent, 0)
     }
 
