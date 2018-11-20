@@ -27,7 +27,6 @@ class PlayerService : Service() {
         }
     }
     private val mBinder = PlayerServiceBinder()
-    private val songs = ArrayList<Uri>()
     private var prepared = false
 
     fun isPlaying(): Boolean {
@@ -50,8 +49,11 @@ class PlayerService : Service() {
     }
 
     fun uploadNewFile(uri: Uri) {
-        songs.add(uri)
-        playLastAddedSong()
+        if (prepared) {
+            prepared = false
+            mediaPlayer.reset()
+        }
+        mediaPlayer.setDataSource(this, uri)
     }
 
     inner class PlayerServiceBinder : Binder() {
@@ -129,11 +131,6 @@ class PlayerService : Service() {
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
-    }
-
-    private fun playLastAddedSong() {
-        mediaPlayer.setDataSource(this, songs[songs.size - 1])
-        playOrPause()
     }
 
     companion object {

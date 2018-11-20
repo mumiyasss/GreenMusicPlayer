@@ -39,11 +39,7 @@ class MainFragment : Fragment() {
                         if (isPlaying) getString(R.string.pause) else getString(R.string.play)
             })
             play_pause_btn.setOnClickListener {
-                GlobalScope.launch(Dispatchers.Main) {
-                    initServiceIfNeeded()
-                    serviceConnection.playerBinder.playOrPause()
-                    playerViewModel.onPlayPause() // Needs for isPlaying status update
-                }
+                playPause()
             }
             stop_service_btn.setOnClickListener {
                 if (serviceConnection.bounded)
@@ -69,9 +65,17 @@ class MainFragment : Fragment() {
                 GlobalScope.launch(Dispatchers.Main) {
                     initServiceIfNeeded()
                     serviceConnection.playerBinder.uploadNewFile(uri)
-                    playerViewModel.onPlayPause()
+                    playPause()
                 }
             }
+        }
+    }
+
+    private fun playPause() {
+        GlobalScope.launch(Dispatchers.Main) {
+            initServiceIfNeeded()
+            serviceConnection.playerBinder.playOrPause()
+            playerViewModel.onPlayPause()
         }
     }
 
