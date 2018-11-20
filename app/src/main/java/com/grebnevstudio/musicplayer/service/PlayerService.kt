@@ -49,8 +49,9 @@ class PlayerService : Service() {
     }
 
     inner class PlayerServiceBinder : Binder() {
-        val service: PlayerService
-            get() = this@PlayerService
+        fun isPlaying(): Boolean = this@PlayerService.isPlaying()
+        fun playOrPause() = this@PlayerService.playOrPause()
+        fun uploadNewFile(uri: Uri) = this@PlayerService.uploadNewFile(uri)
     }
 
     override fun onBind(intent: Intent) = mBinder

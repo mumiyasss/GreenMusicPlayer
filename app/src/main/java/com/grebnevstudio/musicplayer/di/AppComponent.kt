@@ -1,6 +1,7 @@
 package com.grebnevstudio.musicplayer.di
 
 import android.app.Application
+import com.grebnevstudio.musicplayer.PlayerServiceConnection
 import com.grebnevstudio.musicplayer.viewmodel.PlayerViewModel
 import dagger.BindsInstance
 import dagger.Component
@@ -18,4 +19,5 @@ interface AppComponent {
     }
 
     fun injectViewModel(viewModel: PlayerViewModel)
+    fun injectServiceConnection(serviceConnectionObject: PlayerServiceConnection)
 }

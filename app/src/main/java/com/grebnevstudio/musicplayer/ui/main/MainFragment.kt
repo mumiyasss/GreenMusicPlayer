@@ -25,7 +25,6 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val globalView = inflater.inflate(R.layout.fragment_main, container, false)
-
         playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
 
         with(globalView) {
@@ -35,13 +34,14 @@ class MainFragment : Fragment() {
             })
 
             play_pause_btn.setOnClickListener {
-                playerViewModel.playPauseSong()
+                playerViewModel.onPlayPause()
             }
             stop_service_btn.setOnClickListener {
-                playerViewModel.stopService()
+//                playerViewModel.stopService()
             }
             open_fm_button.setOnClickListener {
-                startActivityForResult(openFileIntent,
+                startActivityForResult(
+                    openFileIntent,
                     READ_REQUEST_CODE
                 )
             }
@@ -52,11 +52,31 @@ class MainFragment : Fragment() {
         return globalView
     }
 
+
+//    fun playPauseSong() {
+//        if (service.bounded) {
+//            service.playerBinder.playOrPause()
+//            isPlaying.value = service.playerBinder.isPlaying()
+//        } else
+//            app.showToast("Not so fast, wait a second please...")
+//    }
+//
+//    fun stopService() {
+//    }
+//
+//    fun uploadFile(uri: Uri) {
+//        if (service.bounded) {
+//            service.playerBinder.uploadNewFile(uri)
+//            isPlaying.value = service.playerBinder.isPlaying()
+//        }
+//    }
+
+
     override fun onActivityResult(reqCode: Int, resCode: Int, resultData: Intent?) {
         if (reqCode == READ_REQUEST_CODE && resCode == Activity.RESULT_OK) {
             val uri = resultData?.data
-            if (uri != null)
-                playerViewModel.uploadFile(uri)
+            //if (uri != null)
+                //playerViewModel.uploadFile(uri)
         }
     }
 
