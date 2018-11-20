@@ -39,6 +39,8 @@ class PlayerServiceConnection private constructor() : ServiceConnection {
     }
 
     fun disconnectService() {
+        bounded = false
+        playerBinder.stopService()
         app.unbindService(this)
     }
 

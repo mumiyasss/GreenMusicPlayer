@@ -8,7 +8,6 @@ import dagger.Provides
 
 @Module
 class AppModule {
-
     @Provides
     fun provideServiceIntent(app: Application): Intent {
         return Intent(app, PlayerService::class.java)

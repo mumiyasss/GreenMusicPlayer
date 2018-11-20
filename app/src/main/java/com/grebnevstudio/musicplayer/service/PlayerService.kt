@@ -13,18 +13,24 @@ import android.net.Uri
 import android.os.Binder
 import androidx.core.app.NotificationCompat
 import com.grebnevstudio.musicplayer.R
-import com.grebnevstudio.musicplayer.helpers.*
+import com.grebnevstudio.musicplayer.helpers.ACTION_NEXT
+import com.grebnevstudio.musicplayer.helpers.ACTION_PLAY_PAUSE
+import com.grebnevstudio.musicplayer.helpers.ACTION_PREVIOUS
+import com.grebnevstudio.musicplayer.helpers.isOreoPlus
 import com.grebnevstudio.musicplayer.reciever.ControlActionsListener
 import com.grebnevstudio.musicplayer.ui.main.MainFragment
 
 class PlayerService : Service() {
-    private lateinit var mediaPlayer: MediaPlayer
+    private val mediaPlayer by lazy {
+        MediaPlayer().apply {
+            setAudioStreamType(AudioManager.STREAM_MUSIC);
+        }
+    }
     private val mBinder = PlayerServiceBinder()
     private val songs = ArrayList<Uri>()
     private var prepared = false
 
     fun isPlaying(): Boolean {
-        initMediaPlayerIfNeeded()
         return mediaPlayer.isPlaying
     }
 
@@ -52,30 +58,13 @@ class PlayerService : Service() {
         fun isPlaying(): Boolean = this@PlayerService.isPlaying()
         fun playOrPause() = this@PlayerService.playOrPause()
         fun uploadNewFile(uri: Uri) = this@PlayerService.uploadNewFile(uri)
+        fun stopService() = this@PlayerService.stopForegroundService()
     }
 
     override fun onBind(intent: Intent) = mBinder
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        when (intent.action) {
-            ACTION_STOP_FOREGROUND_SERVICE -> {
-                stopForegroundService()
-            }
-            ACTION_PLAY_PAUSE -> playOrPause()
-        }
-        return super.onStartCommand(intent, flags, startId)
-    }
-
     private fun setup() {
-        initMediaPlayerIfNeeded()
         setupNotification()
-    }
-
-    private fun initMediaPlayerIfNeeded() {
-        if (!::mediaPlayer.isInitialized)
-            mediaPlayer = MediaPlayer().apply {
-                setAudioStreamType(AudioManager.STREAM_MUSIC);
-            }
     }
 
     private fun setupNotification() {

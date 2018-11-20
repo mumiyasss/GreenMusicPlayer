@@ -9,15 +9,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.grebnevstudio.musicplayer.PlayerServiceConnection
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.helpers.openFileIntent
 import com.grebnevstudio.musicplayer.ui.AppActivity
 import com.grebnevstudio.musicplayer.ui.preferences.Fragment1
 import com.grebnevstudio.musicplayer.viewmodel.PlayerViewModel
 import kotlinx.android.synthetic.main.fragment_main.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainFragment : Fragment() {
     private lateinit var playerViewModel: PlayerViewModel
+    private val serviceConnection = PlayerServiceConnection.get()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,18 +32,22 @@ class MainFragment : Fragment() {
     ): View {
         val globalView = inflater.inflate(R.layout.fragment_main, container, false)
         playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
-
+        serviceConnection.connectService()
         with(globalView) {
             playerViewModel.isPlaying.observe(this@MainFragment, Observer { isPlaying ->
                 play_pause_btn.text =
                         if (isPlaying) getString(R.string.pause) else getString(R.string.play)
             })
-
             play_pause_btn.setOnClickListener {
-                playerViewModel.onPlayPause()
+                GlobalScope.launch(Dispatchers.Main) {
+                    initServiceIfNeeded()
+                    serviceConnection.playerBinder.playOrPause()
+                    playerViewModel.onPlayPause() // Needs for isPlaying status update
+                }
             }
             stop_service_btn.setOnClickListener {
-//                playerViewModel.stopService()
+                if (serviceConnection.bounded)
+                    serviceConnection.disconnectService()
             }
             open_fm_button.setOnClickListener {
                 startActivityForResult(
@@ -52,31 +62,25 @@ class MainFragment : Fragment() {
         return globalView
     }
 
-
-//    fun playPauseSong() {
-//        if (service.bounded) {
-//            service.playerBinder.playOrPause()
-//            isPlaying.value = service.playerBinder.isPlaying()
-//        } else
-//            app.showToast("Not so fast, wait a second please...")
-//    }
-//
-//    fun stopService() {
-//    }
-//
-//    fun uploadFile(uri: Uri) {
-//        if (service.bounded) {
-//            service.playerBinder.uploadNewFile(uri)
-//            isPlaying.value = service.playerBinder.isPlaying()
-//        }
-//    }
-
-
     override fun onActivityResult(reqCode: Int, resCode: Int, resultData: Intent?) {
         if (reqCode == READ_REQUEST_CODE && resCode == Activity.RESULT_OK) {
             val uri = resultData?.data
-            //if (uri != null)
-                //playerViewModel.uploadFile(uri)
+            if (uri != null) {
+                GlobalScope.launch(Dispatchers.Main) {
+                    initServiceIfNeeded()
+                    serviceConnection.playerBinder.uploadNewFile(uri)
+                    playerViewModel.onPlayPause()
+                }
+            }
+        }
+    }
+
+    private suspend fun initServiceIfNeeded() {
+        if (!serviceConnection.bounded) {
+            serviceConnection.connectService()
+            while (!serviceConnection.bounded) {
+                delay(10)
+            }
         }
     }
 
