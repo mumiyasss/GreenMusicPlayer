@@ -1,4 +1,4 @@
-package com.grebnevstudio.musicplayer
+package com.grebnevstudio.musicplayer.service
 
 import android.app.Application
 import android.content.ComponentName
@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import com.grebnevstudio.musicplayer.service.PlayerService
+import com.grebnevstudio.musicplayer.MusicPlayerApp
 import javax.inject.Inject
 
 class PlayerServiceConnection private constructor() : ServiceConnection {

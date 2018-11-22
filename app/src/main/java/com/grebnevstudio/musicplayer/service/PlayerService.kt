@@ -29,11 +29,11 @@ class PlayerService : Service() {
     private val mBinder = PlayerServiceBinder()
     private var prepared = false
 
-    fun isPlaying(): Boolean {
+    private fun isPlaying(): Boolean {
         return mediaPlayer.isPlaying
     }
 
-    fun playOrPause() {
+    private fun playOrPause() {
         setup()
         with(mediaPlayer) {
             if (isPlaying)
@@ -48,7 +48,7 @@ class PlayerService : Service() {
         }
     }
 
-    fun uploadNewFile(uri: Uri) {
+    private fun uploadNewFile(uri: Uri) {
         if (prepared) {
             prepared = false
             mediaPlayer.reset()

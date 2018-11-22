@@ -9,14 +9,14 @@
     <string name="checkbox1_summary">Summary of CheckBox 1</string>
     <string name="edittext1_title">EditText 1</string>
     <string name="edittext1_summary">Summary of EditText 1</string>
-    <string name="list1_title">List 1</string>
-    <string name="list1_summary">Summary of List 1</string>
-    <string-array name="entries">
-        <item>one</item>
-        <item>two</item>
-        <item>three</item>
+    <string name="list1_title">Тема</string>
+    <string name="list1_summary">Выберите цветовое оформление приложения</string>
+    <string-array name="ThemeNames">
+        <item>Default</item>
+        <item>Dark</item>
+        <item>AMOLED</item>
     </string-array>
-    <string-array name="entry_values">
+    <string-array name="themes_ids">
         <item>1</item>
         <item>2</item>
         <item>3</item>

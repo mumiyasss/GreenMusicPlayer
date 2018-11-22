@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <!-- Default theme -->
+    <color name="colorPrimaryDefault">#4caf50</color>
+    <color name="colorPrimaryDarkDefault">#388e3c</color>
+    <color name="colorAccentDefault">#ff5722</color>
+
+    <!-- Dark theme -->
+    <color name="backgroundDark">#616161</color>
+    <color name="colorPrimaryDark">#424242</color>
+    <color name="colorPrimaryDarkDark">#212121</color>
+    <color name="colorForegroundDark">#f9ffffff</color>
+
+    <!-- Amoled theme -->
+    <color name="colorPrimaryAmoded">#000</color>
+    <color name="colorPrimaryDarkAmoled">#000</color>
+    <color name="backgroundAmoled">#000</color>
+    <color name="colorForegroundAmoled">#f9ffffff</color>
+    <color name="button_normal_amoled">#616161</color>
 </resources>

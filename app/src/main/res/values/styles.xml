@@ -1,11 +1,37 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeDefault" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimaryDefault</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkDefault</item>
+        <item name="colorAccent">@color/colorAccentDefault</item>
     </style>
 
+    <style name="AppThemeDark" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorBackground">@color/backgroundDark</item>
+        <item name="android:colorForeground">@color/colorForegroundDark</item>
+        <item name="colorButtonNormal">@color/colorPrimaryDark</item>
+
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkDark</item>
+        <item name="colorAccent">@color/colorAccentDefault</item>
+    </style>
+
+    <style name="AppThemeAmoled" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorBackground">@color/backgroundAmoled</item>
+        <item name="android:colorForeground">@color/colorForegroundAmoled</item>
+        <item name="colorButtonNormal">@color/button_normal_amoled</item>
+
+        <item name="colorPrimary">@color/colorPrimaryAmoded</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkAmoled</item>
+        <item name="colorAccent">@color/colorAccentDefault</item>
+    </style>
+
+    <style name="Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
 </resources>

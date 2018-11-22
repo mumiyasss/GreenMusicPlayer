@@ -1,7 +1,7 @@
 package com.grebnevstudio.musicplayer.di
 
 import android.app.Application
-import com.grebnevstudio.musicplayer.PlayerServiceConnection
+import com.grebnevstudio.musicplayer.service.PlayerServiceConnection
 import com.grebnevstudio.musicplayer.viewmodel.PlayerViewModel
 import dagger.BindsInstance
 import dagger.Component

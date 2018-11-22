@@ -6,14 +6,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.grebnevstudio.musicplayer.PlayerServiceConnection
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.helpers.openFileIntent
+import com.grebnevstudio.musicplayer.service.PlayerServiceConnection
 import com.grebnevstudio.musicplayer.ui.AppActivity
-import com.grebnevstudio.musicplayer.ui.preferences.Fragment1
+import com.grebnevstudio.musicplayer.ui.preferences.MainPreferencesFragment
 import com.grebnevstudio.musicplayer.viewmodel.PlayerViewModel
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import kotlinx.coroutines.Dispatchers
@@ -25,12 +27,15 @@ class MainFragment : Fragment() {
     private lateinit var playerViewModel: PlayerViewModel
     private val serviceConnection = PlayerServiceConnection.get()
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val globalView = inflater.inflate(R.layout.fragment_main, container, false)
+        (activity as AppCompatActivity).setSupportActionBar(globalView.my_toolbar as Toolbar)
         playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
         serviceConnection.connectService()
         with(globalView) {
@@ -52,7 +57,8 @@ class MainFragment : Fragment() {
                 )
             }
             pref_btn.setOnClickListener {
-                (activity as AppActivity).startScreen(Fragment1())
+
+                (activity as AppActivity).startScreen(MainPreferencesFragment())
             }
         }
         return globalView

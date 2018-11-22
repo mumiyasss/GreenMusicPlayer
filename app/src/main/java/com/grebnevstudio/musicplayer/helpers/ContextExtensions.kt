@@ -21,3 +21,8 @@ fun Context.showToast(message: String) =
         Toast.LENGTH_LONG
     ).show()
 
+
+fun Context.getSharedPrefs() = getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
+
+
+val Context.baseConfig: BaseConfig get() = BaseConfig(this)
