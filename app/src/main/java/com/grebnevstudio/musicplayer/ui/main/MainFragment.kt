@@ -1,18 +1,23 @@
 package com.grebnevstudio.musicplayer.ui.main
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.helpers.openFileIntent
+import com.grebnevstudio.musicplayer.helpers.openFolderIntent
 import com.grebnevstudio.musicplayer.service.PlayerServiceConnection
 import com.grebnevstudio.musicplayer.ui.AppActivity
 import com.grebnevstudio.musicplayer.ui.preferences.MainPreferencesFragment
@@ -26,8 +31,6 @@ import kotlinx.coroutines.launch
 class MainFragment : Fragment() {
     private lateinit var playerViewModel: PlayerViewModel
     private val serviceConnection = PlayerServiceConnection.get()
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,27 +56,50 @@ class MainFragment : Fragment() {
             open_fm_button.setOnClickListener {
                 startActivityForResult(
                     openFileIntent,
-                    READ_REQUEST_CODE
+                    UPLOAD_FILE_CODE
                 )
             }
             pref_btn.setOnClickListener {
-
                 (activity as AppActivity).startScreen(MainPreferencesFragment())
+            }
+            open_folder_btn.setOnClickListener {
+                startActivityForResult(
+                    openFolderIntent,
+                    UPLOAD_FOLDER_CODE
+                )
             }
         }
         return globalView
     }
 
     override fun onActivityResult(reqCode: Int, resCode: Int, resultData: Intent?) {
-        if (reqCode == READ_REQUEST_CODE && resCode == Activity.RESULT_OK) {
-            val uri = resultData?.data
-            if (uri != null) {
-                GlobalScope.launch(Dispatchers.Main) {
-                    initServiceIfNeeded()
-                    serviceConnection.playerBinder.uploadNewFile(uri)
-                    playPause()
+        if (resCode == Activity.RESULT_OK && resultData != null) {
+            val responseUri = resultData.data
+            if (responseUri != null) when (reqCode) {
+                UPLOAD_FILE_CODE -> uploadNewFile(responseUri)
+                UPLOAD_FOLDER_CODE -> {
+                    val documentFile = DocumentFile.fromTreeUri(activity as Context, responseUri)
+                    documentFile?.listFiles()?.forEach {
+                        when {
+                            it.isDirectory -> logg(it.name + " is dir") // Рекурсивная загрузка
+                            it.type == "audio/mpeg" -> logg(it.name + " IS AUDIO FILE")
+                            else -> logg(it.name.toString())
+                        }
+                    }
                 }
             }
+        }
+    }
+
+    private fun logg(str: String) {
+        Log.d("HII", str)
+    }
+
+    private fun uploadNewFile(uri: Uri) {
+        GlobalScope.launch(Dispatchers.Main) {
+            initServiceIfNeeded()
+            serviceConnection.playerBinder.uploadNewFile(uri)
+            playPause()
         }
     }
 
@@ -95,6 +121,7 @@ class MainFragment : Fragment() {
     }
 
     companion object {
-        const val READ_REQUEST_CODE = 99
+        const val UPLOAD_FILE_CODE = 99
+        const val UPLOAD_FOLDER_CODE = 98
     }
 }

@@ -2,7 +2,6 @@
     <string name="app_name">Green Music Player</string>
     <string name="channel_name">Player Notification</string>
     <string name="channel_description">Notification widget for Music Player</string>
-    <string name="play">Play</string>
     <string name="pause">Pause</string>
 
     <string name="checkbox1_title">CheckBox 1</string>
@@ -11,6 +10,12 @@
     <string name="edittext1_summary">Summary of EditText 1</string>
     <string name="list1_title">Тема</string>
     <string name="list1_summary">Выберите цветовое оформление приложения</string>
+    <string name="welcome_to_green_music_player">Welcome to Green Music Player</string>
+    <string name="play">Play</string>
+    <string name="stop_service">Stop Service</string>
+    <string name="open_track">Open Track</string>
+    <string name="preferences">Preferences</string>
+    <string name="open_folder">Open Folder</string>
     <string-array name="ThemeNames">
         <item>Default</item>
         <item>Dark</item>

@@ -18,7 +18,7 @@ val openFileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
     type = "audio/*"
 }
 
+val openFolderIntent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+
 fun isOreoPlus() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-
-
-
+fun isLolipopPlus() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
