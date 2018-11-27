@@ -15,7 +15,11 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.grebnevstudio.musicplayer.MusicPlayerApp
 import com.grebnevstudio.musicplayer.R
+import com.grebnevstudio.musicplayer.db.Song
+import com.grebnevstudio.musicplayer.db.SongsDao
 import com.grebnevstudio.musicplayer.helpers.openFileIntent
 import com.grebnevstudio.musicplayer.helpers.openFolderIntent
 import com.grebnevstudio.musicplayer.service.PlayerServiceConnection
@@ -27,8 +31,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MainFragment : Fragment() {
+    @Inject
+    lateinit var songsDao: SongsDao
+
     private lateinit var playerViewModel: PlayerViewModel
     private val serviceConnection = PlayerServiceConnection.get()
 
@@ -37,10 +45,12 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        MusicPlayerApp.component.injectMainFragment(this)
+        songsDao.deleteAll()
         val globalView = inflater.inflate(R.layout.fragment_main, container, false)
         (activity as AppCompatActivity).setSupportActionBar(globalView.my_toolbar as Toolbar)
         playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
-        serviceConnection.connectService()
+        if (!serviceConnection.bounded) serviceConnection.connectService()
         with(globalView) {
             playerViewModel.isPlaying.observe(this@MainFragment, Observer { isPlaying ->
                 play_pause_btn.text =
@@ -68,6 +78,7 @@ class MainFragment : Fragment() {
                     UPLOAD_FOLDER_CODE
                 )
             }
+            songs_list.layoutManager = LinearLayoutManager(activity)
         }
         return globalView
     }
@@ -76,29 +87,38 @@ class MainFragment : Fragment() {
         if (resCode == Activity.RESULT_OK && resultData != null) {
             val responseUri = resultData.data
             if (responseUri != null) when (reqCode) {
-                UPLOAD_FILE_CODE -> uploadNewFile(responseUri)
+                UPLOAD_FILE_CODE -> uploadNewFile(fileUri = responseUri)
                 UPLOAD_FOLDER_CODE -> {
-                    val documentFile = DocumentFile.fromTreeUri(activity as Context, responseUri)
-                    documentFile?.listFiles()?.forEach {
-                        when {
-                            it.isDirectory -> logg(it.name + " is dir") // Рекурсивная загрузка
-                            it.type == "audio/mpeg" -> logg(it.name + " IS AUDIO FILE")
-                            else -> logg(it.name.toString())
-                        }
-                    }
+                    logg("THIS: $responseUri")
+                    uploadNewFolder(treeUri = responseUri)
+
                 }
             }
         }
     }
 
-    private fun logg(str: String) {
-        Log.d("HII", str)
+    private fun uploadNewFolder(treeUri: Uri) {
+        val documentFile = DocumentFile.fromTreeUri(activity as Context, treeUri)
+        documentFile?.listFiles()?.forEach {
+            when {
+                it.isDirectory -> {} // it.uri отличается от uri который подает провайдер, поэтому рекурсия невозможна
+                it.type == "audio/mpeg" -> {
+                    songsDao.insert(
+                        Song(path = it.uri.toString(),
+                             name = it.name ?: "UNKNOWN")
+                    )
+                }
+            }
+        }
+        logg((songsDao.getAll().toString()))
     }
 
-    private fun uploadNewFile(uri: Uri) {
+    private fun logg(str: String) = Log.d("HII", str)
+
+    private fun uploadNewFile(fileUri: Uri) {
         GlobalScope.launch(Dispatchers.Main) {
             initServiceIfNeeded()
-            serviceConnection.playerBinder.uploadNewFile(uri)
+            serviceConnection.playerBinder.uploadNewFile(fileUri)
             playPause()
         }
     }

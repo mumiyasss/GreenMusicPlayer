@@ -26,3 +26,4 @@ fun Context.getSharedPrefs() = getSharedPreferences(PREFS_KEY, Context.MODE_PRIV
 
 
 val Context.baseConfig: BaseConfig get() = BaseConfig(this)
+

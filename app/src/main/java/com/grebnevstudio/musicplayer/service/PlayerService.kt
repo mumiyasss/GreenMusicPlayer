@@ -23,9 +23,10 @@ import com.grebnevstudio.musicplayer.ui.main.MainFragment
 class PlayerService : Service() {
     private val mediaPlayer by lazy {
         MediaPlayer().apply {
-            setAudioStreamType(AudioManager.STREAM_MUSIC);
+            setAudioStreamType(AudioManager.STREAM_MUSIC)
         }
     }
+
     private val mBinder = PlayerServiceBinder()
     private var prepared = false
 
@@ -47,6 +48,10 @@ class PlayerService : Service() {
             }
         }
     }
+
+//    private fun playSong(index: Int) {
+//        uploadNewFile(Uri.parse(songs.value!![index].path))
+//    }
 
     private fun uploadNewFile(uri: Uri) {
         if (prepared) {

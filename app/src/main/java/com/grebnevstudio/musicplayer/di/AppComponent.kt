@@ -1,8 +1,9 @@
 package com.grebnevstudio.musicplayer.di
 
 import android.app.Application
+import com.grebnevstudio.musicplayer.service.PlayerService
 import com.grebnevstudio.musicplayer.service.PlayerServiceConnection
-import com.grebnevstudio.musicplayer.viewmodel.PlayerViewModel
+import com.grebnevstudio.musicplayer.ui.main.MainFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -18,6 +19,7 @@ interface AppComponent {
         fun build(): AppComponent
     }
 
-    fun injectViewModel(viewModel: PlayerViewModel)
+    fun injectMainFragment(mainFragment: MainFragment)
     fun injectServiceConnection(serviceConnectionObject: PlayerServiceConnection)
+    fun injectService(playerService: PlayerService)
 }
