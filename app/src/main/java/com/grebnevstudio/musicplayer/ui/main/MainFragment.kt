@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.grebnevstudio.musicplayer.R
-import com.grebnevstudio.musicplayer.helpers.openFileIntent
 import com.grebnevstudio.musicplayer.helpers.openFolderIntent
 import com.grebnevstudio.musicplayer.ui.AppActivity
 import com.grebnevstudio.musicplayer.ui.preferences.MainPreferencesFragment
@@ -22,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_main.view.*
 
 class MainFragment : Fragment() {
     private lateinit var playerViewModel: PlayerViewModel
+    private lateinit var songsAdapter: SongsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,21 +31,25 @@ class MainFragment : Fragment() {
         val globalView = inflater.inflate(R.layout.fragment_main, container, false)
         (activity as AppCompatActivity).setSupportActionBar(globalView.my_toolbar as Toolbar)
         playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
+
         with(globalView) {
+            songsAdapter = SongsAdapter(activity as AppActivity)
+            songs_list.layoutManager = LinearLayoutManager(activity)
+            songs_list.adapter = songsAdapter
+
             playerViewModel.isPlaying.observe(this@MainFragment, Observer { isPlaying ->
-                play_pause_btn.text =
-                        if (isPlaying) getString(R.string.pause) else getString(R.string.play)
+                play_pause_btn.text = if (isPlaying) getString(R.string.pause) else getString(R.string.play)
             })
+
+            playerViewModel.getSongs().observe(this@MainFragment, Observer { songs ->
+                songsAdapter.songs = songs
+            })
+
             play_pause_btn.setOnClickListener {
+
             }
             stop_service_btn.setOnClickListener {
 
-            }
-            open_fm_button.setOnClickListener {
-                startActivityForResult(
-                    openFileIntent,
-                    UPLOAD_FILE_CODE
-                )
             }
             pref_btn.setOnClickListener {
                 (activity as AppActivity).startScreen(MainPreferencesFragment())
@@ -53,10 +57,12 @@ class MainFragment : Fragment() {
             open_folder_btn.setOnClickListener {
                 startActivityForResult(
                     openFolderIntent,
-                    UPLOAD_FOLDER_CODE
+                    MainFragment.UPLOAD_FOLDER_CODE
                 )
             }
-            songs_list.layoutManager = LinearLayoutManager(activity)
+            clear_song_list_btn.setOnClickListener {
+                playerViewModel.clearPlaylist()
+            }
         }
         return globalView
     }
@@ -72,7 +78,6 @@ class MainFragment : Fragment() {
     }
 
     companion object {
-        const val UPLOAD_FILE_CODE = 99
         const val UPLOAD_FOLDER_CODE = 98
     }
 }

@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import com.grebnevstudio.musicplayer.MusicPlayerApp
 import com.grebnevstudio.musicplayer.db.Song
 import com.grebnevstudio.musicplayer.db.SongsDao
+import com.grebnevstudio.musicplayer.helpers.AUDIO_MIME
 import com.grebnevstudio.musicplayer.helpers.asyncOnMainThread
 import com.grebnevstudio.musicplayer.service.PlayerServiceConnection
 import javax.inject.Inject
@@ -21,6 +22,9 @@ class PlayerViewModel : ViewModel() {
     @Inject
     lateinit var serviceConnection: PlayerServiceConnection
 
+
+    fun getSongs() = songsDao.getAll()
+
     val isPlaying = MutableLiveData<Boolean>()
 
     fun uploadNewFolder(treeUri: Uri) {
@@ -28,7 +32,7 @@ class PlayerViewModel : ViewModel() {
             it.listFiles().forEach { file ->
                 when {
                     file.isDirectory -> { }
-                    file.type == "audio/mpeg" -> {
+                    file.type == AUDIO_MIME -> {
                         songsDao.insert(
                             Song(
                                 path = file.uri.toString(),
@@ -41,15 +45,19 @@ class PlayerViewModel : ViewModel() {
         }
     }
 
-    init {
-        MusicPlayerApp.component.injectPlayerViewModel(this)
-        updateIsPlayingStatus()
-    }
-
     private fun updateIsPlayingStatus() {
         asyncOnMainThread{
             serviceConnection.initServiceIfNeeded()
             isPlaying.value = serviceConnection.playerBinder.isPlaying()
         }
+    }
+
+    fun clearPlaylist() {
+        songsDao.deleteAll()
+    }
+
+    init {
+        MusicPlayerApp.component.injectPlayerViewModel(this)
+        updateIsPlayingStatus()
     }
 }
