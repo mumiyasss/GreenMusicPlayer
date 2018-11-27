@@ -7,9 +7,10 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import com.grebnevstudio.musicplayer.MusicPlayerApp
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
-class PlayerServiceConnection private constructor() : ServiceConnection {
+class PlayerServiceConnection : ServiceConnection {
     @Inject
     lateinit var app: Application
     @Inject
@@ -30,10 +31,6 @@ class PlayerServiceConnection private constructor() : ServiceConnection {
         bounded = false
     }
 
-    init {
-        MusicPlayerApp.component.injectServiceConnection(this)
-    }
-
     fun connectService() {
         app.bindService(serviceIntent, this, Context.BIND_AUTO_CREATE)
     }
@@ -44,15 +41,16 @@ class PlayerServiceConnection private constructor() : ServiceConnection {
         app.unbindService(this)
     }
 
-    companion object {
-        private var thisServiceConnectionObj: PlayerServiceConnection? = null
-        fun get(): PlayerServiceConnection {
-            return thisServiceConnectionObj ?: synchronized(this) {
-                val tempConn = PlayerServiceConnection()
-                thisServiceConnectionObj = tempConn
-                return tempConn
-            }
+    suspend fun initServiceIfNeeded() {
+        if (!bounded) {
+            connectService()
+            while (!bounded)
+                delay(10)
         }
+    }
+
+    init {
+        MusicPlayerApp.component.injectServiceConnection(this)
     }
 }
 

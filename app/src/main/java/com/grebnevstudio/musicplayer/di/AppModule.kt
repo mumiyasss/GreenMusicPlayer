@@ -7,6 +7,7 @@ import com.grebnevstudio.musicplayer.db.SongsDao
 import com.grebnevstudio.musicplayer.db.SongsDatabase
 import com.grebnevstudio.musicplayer.helpers.DB_FILE_NAME
 import com.grebnevstudio.musicplayer.service.PlayerService
+import com.grebnevstudio.musicplayer.service.PlayerServiceConnection
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -25,5 +26,11 @@ class AppModule {
             .allowMainThreadQueries()
             .build()
         return db.songsDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideServiceConnection(): PlayerServiceConnection {
+        return PlayerServiceConnection()
     }
 }
