@@ -33,7 +33,7 @@ class MainFragment : Fragment() {
         playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
 
         with(globalView) {
-            songsAdapter = SongsAdapter(activity as AppActivity)
+            songsAdapter = SongsAdapter(activity as AppActivity, playerViewModel)
             songs_list.layoutManager = LinearLayoutManager(activity)
             songs_list.adapter = songsAdapter
 
@@ -41,12 +41,16 @@ class MainFragment : Fragment() {
                 play_pause_btn.text = if (isPlaying) getString(R.string.pause) else getString(R.string.play)
             })
 
+            playerViewModel.activeSongTitle.observe(this@MainFragment, Observer { songTitle ->
+                active_song_title.text = songTitle
+            })
+
             playerViewModel.getSongs().observe(this@MainFragment, Observer { songs ->
                 songsAdapter.songs = songs
             })
 
             play_pause_btn.setOnClickListener {
-
+                playerViewModel.playOrPauseSong()
             }
             stop_service_btn.setOnClickListener {
 

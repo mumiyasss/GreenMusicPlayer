@@ -16,6 +16,7 @@ const val DEFAULT_THEME = R.style.AppThemeDefault
 const val PREFS_KEY = "Prefs"
 const val DB_FILE_NAME = "songs.db"
 const val AUDIO_MIME = "audio/mpeg"
+const val CHOOSE_TRACK_STUB = "Выберите композицию"
 
 val openFileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
     addCategory(Intent.CATEGORY_OPENABLE)

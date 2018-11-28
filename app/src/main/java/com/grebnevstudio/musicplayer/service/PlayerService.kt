@@ -1,37 +1,65 @@
 package com.grebnevstudio.musicplayer.service
 
 import android.app.NotificationChannel
+
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.media.AudioManager
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Binder
 import androidx.core.app.NotificationCompat
+import androidx.lifecycle.LiveData
+import com.grebnevstudio.musicplayer.MusicPlayerApp
 import com.grebnevstudio.musicplayer.R
+import com.grebnevstudio.musicplayer.db.Song
+import com.grebnevstudio.musicplayer.db.SongsDao
 import com.grebnevstudio.musicplayer.helpers.ACTION_NEXT
 import com.grebnevstudio.musicplayer.helpers.ACTION_PLAY_PAUSE
 import com.grebnevstudio.musicplayer.helpers.ACTION_PREVIOUS
 import com.grebnevstudio.musicplayer.helpers.isOreoPlus
 import com.grebnevstudio.musicplayer.reciever.ControlActionsListener
 import com.grebnevstudio.musicplayer.ui.main.MainFragment
+import javax.inject.Inject
 
 class PlayerService : Service() {
-    private val mediaPlayer by lazy {
-        MediaPlayer().apply {
-            setAudioStreamType(AudioManager.STREAM_MUSIC)
-        }
+    init {
+        MusicPlayerApp.component.injectService(this)
     }
 
-    private val mBinder = PlayerServiceBinder()
-    private var prepared = false
+    @Inject
+    lateinit var songsDao: SongsDao
 
-    private fun isPlaying(): Boolean {
-        return mediaPlayer.isPlaying
+    private val songs: LiveData<List<Song>> by lazy {
+        songsDao.getAll()
+    }
+
+    private val mediaPlayer by lazy {
+        MediaPlayer().apply {
+            val audioAttributes = AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build()
+            setAudioAttributes(audioAttributes)
+        }
+    }
+    private var prepared = false
+    private fun isPlaying() = mediaPlayer.isPlaying
+
+    private fun playOrPauseSong(song: Song?) {
+        if (song == null) playOrPause()
+        else {
+            if (prepared) {
+                prepared = false
+                mediaPlayer.reset()
+            }
+            mediaPlayer.setDataSource(this, Uri.parse(song.path))
+            playOrPause()
+        }
     }
 
     private fun playOrPause() {
@@ -49,22 +77,11 @@ class PlayerService : Service() {
         }
     }
 
-//    private fun playSong(index: Int) {
-//        uploadNewFile(Uri.parse(songs.value!![index].path))
-//    }
-
-    private fun uploadNewFile(uri: Uri) {
-        if (prepared) {
-            prepared = false
-            mediaPlayer.reset()
-        }
-        mediaPlayer.setDataSource(this, uri)
-    }
+    private val mBinder = PlayerServiceBinder()
 
     inner class PlayerServiceBinder : Binder() {
         fun isPlaying(): Boolean = this@PlayerService.isPlaying()
-        fun playOrPause() = this@PlayerService.playOrPause()
-        fun uploadNewFile(uri: Uri) = this@PlayerService.uploadNewFile(uri)
+        fun playOrPauseSong(song: Song?) = this@PlayerService.playOrPauseSong(song)
         fun stopService() = this@PlayerService.stopForegroundService()
     }
 

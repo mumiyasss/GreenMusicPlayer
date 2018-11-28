@@ -10,6 +10,7 @@ import com.grebnevstudio.musicplayer.MusicPlayerApp
 import com.grebnevstudio.musicplayer.db.Song
 import com.grebnevstudio.musicplayer.db.SongsDao
 import com.grebnevstudio.musicplayer.helpers.AUDIO_MIME
+import com.grebnevstudio.musicplayer.helpers.CHOOSE_TRACK_STUB
 import com.grebnevstudio.musicplayer.helpers.asyncOnMainThread
 import com.grebnevstudio.musicplayer.service.PlayerServiceConnection
 import javax.inject.Inject
@@ -26,6 +27,9 @@ class PlayerViewModel : ViewModel() {
     fun getSongs() = songsDao.getAll()
 
     val isPlaying = MutableLiveData<Boolean>()
+    val activeSongTitle = MutableLiveData<String>().apply {
+        value = CHOOSE_TRACK_STUB
+    }
 
     fun uploadNewFolder(treeUri: Uri) {
         DocumentFile.fromTreeUri(app as Context, treeUri)?.let {
@@ -54,6 +58,18 @@ class PlayerViewModel : ViewModel() {
 
     fun clearPlaylist() {
         songsDao.deleteAll()
+        activeSongTitle.value = CHOOSE_TRACK_STUB
+    }
+
+    fun playOrPauseSong(song: Song? = null) {
+        asyncOnMainThread{
+            serviceConnection.initServiceIfNeeded()
+            serviceConnection.playerBinder.playOrPauseSong(song)
+            updateIsPlayingStatus()
+            song?.let {
+                activeSongTitle.value = song.name
+            }
+        }
     }
 
     init {

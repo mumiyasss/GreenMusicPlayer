@@ -31,10 +31,6 @@ class PlayerServiceConnection : ServiceConnection {
         bounded = false
     }
 
-    fun connectService() {
-        app.bindService(serviceIntent, this, Context.BIND_AUTO_CREATE)
-    }
-
     fun disconnectService() {
         bounded = false
         playerBinder.stopService()
@@ -47,6 +43,10 @@ class PlayerServiceConnection : ServiceConnection {
             while (!bounded)
                 delay(10)
         }
+    }
+
+    private fun connectService() {
+        app.bindService(serviceIntent, this, Context.BIND_AUTO_CREATE)
     }
 
     init {
