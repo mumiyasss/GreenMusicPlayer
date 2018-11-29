@@ -1,7 +1,6 @@
 package com.grebnevstudio.musicplayer.service
 
 import android.app.NotificationChannel
-
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
@@ -13,30 +12,23 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Binder
 import androidx.core.app.NotificationCompat
-import androidx.lifecycle.LiveData
 import com.grebnevstudio.musicplayer.MusicPlayerApp
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.db.Song
-import com.grebnevstudio.musicplayer.db.SongsDao
 import com.grebnevstudio.musicplayer.helpers.ACTION_NEXT
 import com.grebnevstudio.musicplayer.helpers.ACTION_PLAY_PAUSE
 import com.grebnevstudio.musicplayer.helpers.ACTION_PREVIOUS
 import com.grebnevstudio.musicplayer.helpers.isOreoPlus
 import com.grebnevstudio.musicplayer.reciever.ControlActionsListener
 import com.grebnevstudio.musicplayer.ui.main.MainFragment
-import javax.inject.Inject
 
 class PlayerService : Service() {
     init {
         MusicPlayerApp.component.injectService(this)
     }
 
-    @Inject
-    lateinit var songsDao: SongsDao
-
-    private val songs: LiveData<List<Song>> by lazy {
-        songsDao.getAll()
-    }
+    private var activeSong: Song? = null
+    private var songsToPlay: List<Song> = ArrayList()
 
     private val mediaPlayer by lazy {
         MediaPlayer().apply {
@@ -50,6 +42,16 @@ class PlayerService : Service() {
     private var prepared = false
     private fun isPlaying() = mediaPlayer.isPlaying
 
+    private fun previous() {
+        next(indexShift = -1)
+    }
+
+    // null pointer, stop button is next button
+    private fun next(indexShift: Int = 1) {
+        val indexOfActiveSong = songsToPlay.indexOf(activeSong)
+        playOrPauseSong(songsToPlay[indexOfActiveSong + indexShift])
+    }
+
     private fun playOrPauseSong(song: Song?) {
         if (song == null) playOrPause()
         else {
@@ -59,6 +61,7 @@ class PlayerService : Service() {
             }
             mediaPlayer.setDataSource(this, Uri.parse(song.path))
             playOrPause()
+            activeSong = song
         }
     }
 
@@ -81,8 +84,14 @@ class PlayerService : Service() {
 
     inner class PlayerServiceBinder : Binder() {
         fun isPlaying(): Boolean = this@PlayerService.isPlaying()
+        fun next() = this@PlayerService.next()
+        fun previous() = this@PlayerService.previous()
         fun playOrPauseSong(song: Song?) = this@PlayerService.playOrPauseSong(song)
         fun stopService() = this@PlayerService.stopForegroundService()
+        fun getActiveSong() = this@PlayerService.activeSong
+        fun setSongsList(songs: List<Song>) {
+            this@PlayerService.songsToPlay = songs
+        }
     }
 
     override fun onBind(intent: Intent) = mBinder

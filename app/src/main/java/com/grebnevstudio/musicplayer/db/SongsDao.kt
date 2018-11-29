@@ -5,7 +5,7 @@ import androidx.room.*
 
 @Dao
 interface SongsDao {
-    @Query("SELECT * FROM songs")
+    @Query("SELECT * FROM songsToPlay")
     fun getAll(): LiveData<List<Song>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -17,6 +17,6 @@ interface SongsDao {
     @Delete
     fun deleteSong(song: Song)
 
-    @Query("DELETE FROM songs")
+    @Query("DELETE FROM songsToPlay")
     fun deleteAll()
 }

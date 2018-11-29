@@ -46,14 +46,21 @@ class MainFragment : Fragment() {
             })
 
             playerViewModel.getSongs().observe(this@MainFragment, Observer { songs ->
+                playerViewModel.onSongsSetChanged(songs)
                 songsAdapter.songs = songs
             })
 
             play_pause_btn.setOnClickListener {
                 playerViewModel.playOrPauseSong()
             }
+            next_btn.setOnClickListener {
+                playerViewModel.playNext()
+            }
+            previous_btn.setOnClickListener {
+                playerViewModel.playPrevious()
+            }
             stop_service_btn.setOnClickListener {
-
+                //playerViewModel.playNext()
             }
             pref_btn.setOnClickListener {
                 (activity as AppActivity).startScreen(MainPreferencesFragment())

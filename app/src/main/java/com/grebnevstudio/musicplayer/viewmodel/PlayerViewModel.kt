@@ -23,7 +23,6 @@ class PlayerViewModel : ViewModel() {
     @Inject
     lateinit var serviceConnection: PlayerServiceConnection
 
-
     fun getSongs() = songsDao.getAll()
 
     val isPlaying = MutableLiveData<Boolean>()
@@ -35,7 +34,8 @@ class PlayerViewModel : ViewModel() {
         DocumentFile.fromTreeUri(app as Context, treeUri)?.let {
             it.listFiles().forEach { file ->
                 when {
-                    file.isDirectory -> { }
+                    file.isDirectory -> {
+                    }
                     file.type == AUDIO_MIME -> {
                         songsDao.insert(
                             Song(
@@ -50,9 +50,13 @@ class PlayerViewModel : ViewModel() {
     }
 
     private fun updateIsPlayingStatus() {
-        asyncOnMainThread{
+        asyncOnMainThread {
             serviceConnection.initServiceIfNeeded()
+            // Todo: Точно ли нельзя переделать на LiveData
             isPlaying.value = serviceConnection.playerBinder.isPlaying()
+            serviceConnection.playerBinder.getActiveSong()?.let { song ->
+                activeSongTitle.value = song.name
+            }
         }
     }
 
@@ -62,13 +66,36 @@ class PlayerViewModel : ViewModel() {
     }
 
     fun playOrPauseSong(song: Song? = null) {
-        asyncOnMainThread{
+        asyncOnMainThread {
             serviceConnection.initServiceIfNeeded()
             serviceConnection.playerBinder.playOrPauseSong(song)
             updateIsPlayingStatus()
             song?.let {
                 activeSongTitle.value = song.name
             }
+        }
+    }
+
+    fun onSongsSetChanged(songs: List<Song>) {
+        asyncOnMainThread {
+            serviceConnection.initServiceIfNeeded()
+            serviceConnection.playerBinder.setSongsList(songs)
+        }
+    }
+
+    fun playNext() {
+        asyncOnMainThread {
+            serviceConnection.initServiceIfNeeded()
+            serviceConnection.playerBinder.next()
+            updateIsPlayingStatus()
+        }
+    }
+
+    fun playPrevious() {
+        asyncOnMainThread {
+            serviceConnection.initServiceIfNeeded()
+            serviceConnection.playerBinder.previous()
+            updateIsPlayingStatus()
         }
     }
 

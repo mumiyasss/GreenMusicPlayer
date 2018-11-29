@@ -3,7 +3,7 @@ package com.grebnevstudio.musicplayer.db
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "songs")
+@Entity(tableName = "songsToPlay")
 data class Song(
     @PrimaryKey
     val path: String,

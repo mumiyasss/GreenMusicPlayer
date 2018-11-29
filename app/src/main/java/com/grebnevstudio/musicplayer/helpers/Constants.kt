@@ -14,7 +14,7 @@ const val DEFAULT_THEME = R.style.AppThemeDefault
 
 // application constants
 const val PREFS_KEY = "Prefs"
-const val DB_FILE_NAME = "songs.db"
+const val DB_FILE_NAME = "songsToPlay.db"
 const val AUDIO_MIME = "audio/mpeg"
 const val CHOOSE_TRACK_STUB = "Выберите композицию"
 
