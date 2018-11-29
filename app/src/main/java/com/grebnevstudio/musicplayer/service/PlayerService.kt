@@ -15,12 +15,10 @@ import androidx.core.app.NotificationCompat
 import com.grebnevstudio.musicplayer.MusicPlayerApp
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.db.Song
-import com.grebnevstudio.musicplayer.helpers.ACTION_NEXT
-import com.grebnevstudio.musicplayer.helpers.ACTION_PLAY_PAUSE
-import com.grebnevstudio.musicplayer.helpers.ACTION_PREVIOUS
-import com.grebnevstudio.musicplayer.helpers.isOreoPlus
+import com.grebnevstudio.musicplayer.helpers.*
 import com.grebnevstudio.musicplayer.reciever.ControlActionsListener
 import com.grebnevstudio.musicplayer.ui.main.MainFragment
+import java.io.IOException
 
 class PlayerService : Service() {
     init {
@@ -46,38 +44,49 @@ class PlayerService : Service() {
         next(indexShift = -1)
     }
 
-    // null pointer, stop button is next button
     private fun next(indexShift: Int = 1) {
-        val indexOfActiveSong = songsToPlay.indexOf(activeSong)
-        playOrPauseSong(songsToPlay[indexOfActiveSong + indexShift])
+        val indexOfSongToPlay = songsToPlay.indexOf(activeSong) + indexShift
+        if (songsToPlay.size > indexOfSongToPlay && indexOfSongToPlay >= 0) {
+            playOrPauseSong(songsToPlay[indexOfSongToPlay])
+        }
     }
 
     private fun playOrPauseSong(song: Song?) {
-        if (song == null) playOrPause()
-        else {
-            if (prepared) {
-                prepared = false
-                mediaPlayer.reset()
+        try {
+            if (song == null)
+                playOrPause()
+            else {
+                if (prepared) {
+                    prepared = false
+                    mediaPlayer.reset()
+                }
+                mediaPlayer.setDataSource(this, Uri.parse(song.path))
+                activeSong = song
+                playOrPause()
             }
-            mediaPlayer.setDataSource(this, Uri.parse(song.path))
-            playOrPause()
-            activeSong = song
+        } catch (e: IOException) {
+            showToast(FILE_NOT_FOUND)
+            activeSong = null
+            prepared = false
+            mediaPlayer.reset()
         }
     }
 
     private fun playOrPause() {
-        setup()
-        with(mediaPlayer) {
-            if (isPlaying)
-                pause()
-            else {
-                if (!prepared) {
-                    prepare()
-                    prepared = true
+        if(activeSong != null) {
+            setup()
+            with(mediaPlayer) {
+                if (isPlaying)
+                    pause()
+                else {
+                    if (!prepared) {
+                        prepare()
+                        prepared = true
+                    }
+                    start()
                 }
-                start()
             }
-        }
+        } else showToast(FILE_NOT_FOUND)
     }
 
     private val mBinder = PlayerServiceBinder()
