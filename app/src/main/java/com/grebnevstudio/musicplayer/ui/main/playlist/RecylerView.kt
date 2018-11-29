@@ -1,4 +1,4 @@
-package com.grebnevstudio.musicplayer.ui.main
+package com.grebnevstudio.musicplayer.ui.main.playlist
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -14,6 +14,7 @@ class SongsAdapter(
     private val hostActivity: Context,
     private val playerViewModel: PlayerViewModel
 ) : RecyclerView.Adapter<SongViewHolder>() {
+
     var songs: List<Song> = ArrayList()
         set(value) {
             field = value

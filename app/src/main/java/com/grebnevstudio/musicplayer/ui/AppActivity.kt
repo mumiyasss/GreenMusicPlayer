@@ -13,6 +13,7 @@ class AppActivity : AppCompatActivity() {
         setTheme(baseConfig.appTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.app_activity_container)
+        //startScreen(MainFragment())
         startScreen(MainFragment())
     }
 

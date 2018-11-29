@@ -12,19 +12,14 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Binder
 import androidx.core.app.NotificationCompat
-import com.grebnevstudio.musicplayer.MusicPlayerApp
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.db.Song
 import com.grebnevstudio.musicplayer.helpers.*
 import com.grebnevstudio.musicplayer.reciever.ControlActionsListener
-import com.grebnevstudio.musicplayer.ui.main.MainFragment
+import com.grebnevstudio.musicplayer.ui.main.playcontrol.PlayControlFragment
 import java.io.IOException
 
 class PlayerService : Service() {
-    init {
-        MusicPlayerApp.component.injectService(this)
-    }
-
     private var activeSong: Song? = null
     private var songsToPlay: List<Song> = ArrayList()
 
@@ -143,7 +138,7 @@ class PlayerService : Service() {
     }
 
     private fun getContentIntent(): PendingIntent {
-        val contentIntent = Intent(this, MainFragment::class.java)
+        val contentIntent = Intent(this, PlayControlFragment::class.java)
         return PendingIntent.getActivity(this, 0, contentIntent, 0)
     }
 
