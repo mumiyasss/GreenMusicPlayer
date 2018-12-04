@@ -8,13 +8,19 @@ import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.ui.main.MainFragment
 
 class AppActivity : AppCompatActivity() {
+    private val fragmentContainerId = R.id.fragment_container
+
     override fun onCreate(savedInstanceState: Bundle?) {
         //setTheme(baseConfig.appTheme)
         setTheme(R.style.AppThemeDefault)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.container_app_activity)
-        if (savedInstanceState == null)
-            startScreen(MainFragment())
+        setupFirstFragmentIfNeeded(MainFragment())
+    }
+
+    private fun setupFirstFragmentIfNeeded(screenToLaunch: Fragment) {
+        if (supportFragmentManager.findFragmentById(fragmentContainerId) == null)
+            startScreen(screenToLaunch)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -34,7 +40,7 @@ class AppActivity : AppCompatActivity() {
 
     fun startScreen(newFragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, newFragment)
+            .replace(fragmentContainerId, newFragment)
             .addToBackStack(null)
             .commit()
     }
@@ -42,10 +48,5 @@ class AppActivity : AppCompatActivity() {
     fun applyNewTheme(): Boolean {
         recreate()
         return true
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putBoolean("isRestoredTag", true)
-        super.onSaveInstanceState(outState)
     }
 }
