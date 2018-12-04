@@ -36,7 +36,7 @@ class PlayControlFragment : Fragment() {
                 active_song_title.text = songTitle
             })
 
-            play_pause_btn_layout.setOnClickListener {
+            play_pause_btn.setOnClickListener {
                 playerViewModel.playOrPauseSong()
             }
             next_btn.setOnClickListener {

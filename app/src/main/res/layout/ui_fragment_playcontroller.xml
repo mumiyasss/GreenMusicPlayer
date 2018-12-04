@@ -14,12 +14,36 @@
 
     <com.gigamole.library.ShadowLayout
             android:id="@+id/play_pause_btn_layout"
-            android:layout_marginTop="204dp"
-            android:layout_marginStart="136dp"
+
+            android:layout_marginTop="212dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
+
+            app:sl_shadowed="true"
+            app:sl_shadow_angle="45"
+            app:sl_shadow_radius="2dp"
+            app:sl_shadow_distance="2dp"
+            app:sl_shadow_color="#88000000"
+            android:layout_marginStart="116dp"
             app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.099">
+
+        <ImageButton
+                android:id="@+id/play_pause_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_play_btn"
+                android:background="@drawable/circle_play_button"/>
+    </com.gigamole.library.ShadowLayout>
+
+    <com.gigamole.library.ShadowLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/play_pause_btn_layout"
+            android:layout_marginStart="20dp" android:layout_marginTop="28dp"
+            app:layout_constraintTop_toTopOf="@+id/play_pause_btn_layout"
 
             app:sl_shadowed="true"
             app:sl_shadow_angle="45"
@@ -28,12 +52,35 @@
             app:sl_shadow_color="#88000000">
 
         <ImageButton
-                android:id="@+id/play_pause_btn"
-                android:text="@string/play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_play_btn"
-                android:background="@drawable/circle_play_button"/>
+                android:src="@drawable/ic_next_btn"
+                android:background="@drawable/circle_next_prev_button"
+
+                android:id="@+id/next_btn"/>
+
+    </com.gigamole.library.ShadowLayout>
+
+    <com.gigamole.library.ShadowLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/play_pause_btn_layout"
+            android:layout_marginEnd="20dp" android:layout_marginTop="28dp"
+            app:layout_constraintTop_toTopOf="@+id/play_pause_btn_layout"
+
+            app:sl_shadowed="true"
+            app:sl_shadow_angle="45"
+            app:sl_shadow_radius="2dp"
+            app:sl_shadow_distance="2dp"
+            app:sl_shadow_color="#88000000">
+
+
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_prev_btn"
+                android:background="@drawable/circle_next_prev_button"
+                android:id="@+id/previous_btn"/>
     </com.gigamole.library.ShadowLayout>
 
     <Button
@@ -80,19 +127,5 @@
             android:textStyle="italic"
             android:textSize="18sp"
             app:layout_constraintVertical_bias="1.0"/>
-    <Button
-            android:text="Previous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/previous_btn" app:layout_constraintEnd_toStartOf="@+id/play_pause_btn_layout"
-            android:layout_marginEnd="20dp" android:layout_marginTop="28dp"
-            app:layout_constraintTop_toTopOf="@+id/play_pause_btn_layout"/>
-    <Button
-            android:text="Next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/next_btn" app:layout_constraintStart_toEndOf="@+id/play_pause_btn_layout"
-            android:layout_marginStart="20dp" android:layout_marginTop="28dp"
-            app:layout_constraintTop_toTopOf="@+id/play_pause_btn_layout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
