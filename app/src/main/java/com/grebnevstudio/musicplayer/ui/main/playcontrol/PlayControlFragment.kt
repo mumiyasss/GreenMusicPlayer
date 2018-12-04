@@ -10,9 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.grebnevstudio.musicplayer.R
-import com.grebnevstudio.musicplayer.helpers.openFolderIntent
-import com.grebnevstudio.musicplayer.ui.AppActivity
-import com.grebnevstudio.musicplayer.ui.preferences.MainPreferencesFragment
 import com.grebnevstudio.musicplayer.viewmodel.PlayerViewModel
 import kotlinx.android.synthetic.main.ui_fragment_playcontroller.view.*
 
@@ -45,21 +42,21 @@ class PlayControlFragment : Fragment() {
             previous_btn.setOnClickListener {
                 playerViewModel.playPrevious()
             }
-            stop_service_btn.setOnClickListener {
-                //playerViewModel.playNext()
-            }
-            pref_btn.setOnClickListener {
-                (activity as AppActivity).startScreen(MainPreferencesFragment())
-            }
-            open_folder_btn.setOnClickListener {
-                startActivityForResult(
-                    openFolderIntent,
-                    UPLOAD_FOLDER_CODE
-                )
-            }
-            clear_song_list_btn.setOnClickListener {
-                playerViewModel.clearPlaylist()
-            }
+//            stop_service_btn.setOnClickListener {
+//                //playerViewModel.playNext()
+//            }
+//            pref_btn.setOnClickListener {
+//                (activity as AppActivity).startScreen(MainPreferencesFragment())
+//            }
+//            open_folder_btn.setOnClickListener {
+//                startActivityForResult(
+//                    openFolderIntent,
+//                    UPLOAD_FOLDER_CODE
+//                )
+//            }
+//            clear_song_list_btn.setOnClickListener {
+//                playerViewModel.clearPlaylist()
+//            }
         }
         return globalView
     }
