@@ -14,7 +14,7 @@ import com.grebnevstudio.musicplayer.helpers.openFolderIntent
 import com.grebnevstudio.musicplayer.ui.AppActivity
 import com.grebnevstudio.musicplayer.ui.preferences.MainPreferencesFragment
 import com.grebnevstudio.musicplayer.viewmodel.PlayerViewModel
-import kotlinx.android.synthetic.main.fragment_main.view.*
+import kotlinx.android.synthetic.main.ui_fragment_playcontroller.view.*
 
 class PlayControlFragment : Fragment() {
     private lateinit var playerViewModel: PlayerViewModel
@@ -24,19 +24,19 @@ class PlayControlFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val globalView = inflater.inflate(R.layout.fragment_main, container, false)
+        val globalView = inflater.inflate(R.layout.ui_fragment_playcontroller, container, false)
         playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
 
         with(globalView) {
             playerViewModel.isPlaying.observe(this@PlayControlFragment, Observer { isPlaying ->
-                play_pause_btn.text = if (isPlaying) getString(R.string.pause) else getString(R.string.play)
+               // play_pause_btn.text = if (isPlaying) getString(R.string.pause) else getString(R.string.play)
             })
 
             playerViewModel.activeSongTitle.observe(this@PlayControlFragment, Observer { songTitle ->
                 active_song_title.text = songTitle
             })
 
-            play_pause_btn.setOnClickListener {
+            play_pause_btn_layout.setOnClickListener {
                 playerViewModel.playOrPauseSong()
             }
             next_btn.setOnClickListener {

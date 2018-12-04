@@ -8,11 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.grebnevstudio.musicplayer.R
-import kotlinx.android.synthetic.main.fragment_preferences.view.*
+import kotlinx.android.synthetic.main.pref_fragment_mainpref.view.*
 
 class MainPreferencesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val globalView = inflater.inflate(R.layout.fragment_preferences, container, false)
+        val globalView = inflater.inflate(R.layout.pref_fragment_mainpref, container, false)
 
         (activity as AppCompatActivity).setSupportActionBar(globalView.my_toolbar as Toolbar)
         (activity as AppCompatActivity).supportActionBar?.apply {

@@ -11,12 +11,12 @@ import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.ui.AppActivity
 import com.grebnevstudio.musicplayer.ui.main.playcontrol.PlayControlFragment
 import com.grebnevstudio.musicplayer.ui.main.playlist.PlaylistFragment
-import kotlinx.android.synthetic.main.fragment_viewpager.view.*
+import kotlinx.android.synthetic.main.container_viewpager.view.*
 
 class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val globalView = inflater.inflate(R.layout.fragment_viewpager, container, false)
+        val globalView = inflater.inflate(R.layout.container_viewpager, container, false)
         globalView.viewpager.adapter =
                 MainFragmentPagerAdapter((activity as AppActivity).supportFragmentManager)
         return globalView

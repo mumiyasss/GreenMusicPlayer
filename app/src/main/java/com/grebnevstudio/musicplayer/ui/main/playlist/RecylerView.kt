@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.db.Song
 import com.grebnevstudio.musicplayer.viewmodel.PlayerViewModel
-import kotlinx.android.synthetic.main.song_list_item.view.*
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_song_list.*
 
 class SongsAdapter(
     private val hostActivity: Context,
@@ -23,7 +24,7 @@ class SongsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         LayoutInflater.from(hostActivity).let { inflater ->
-            val itemView = inflater.inflate(R.layout.song_list_item, parent, false)
+            val itemView = inflater.inflate(R.layout.item_song_list, parent, false)
             return SongViewHolder(itemView, playerViewModel)
         }
     }
@@ -34,17 +35,19 @@ class SongsAdapter(
     override fun getItemCount() = songs.size
 }
 
+/**
+ * Layout container for more performance. (AndroidExtensions { experimental = true })
+ */
 class SongViewHolder(
-    itemView: View,
+    override val containerView: View,
     private val playerViewModel: PlayerViewModel
-) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+) : RecyclerView.ViewHolder(containerView), View.OnClickListener, LayoutContainer {
 
-    private var songTitle = itemView.song_title
     private lateinit var song: Song
 
     fun bind(songToBind: Song) {
         song = songToBind
-        songTitle.text = song.name
+        song_title.text = song.name
     }
 
     override fun onClick(itemView: View) {
@@ -52,6 +55,6 @@ class SongViewHolder(
     }
 
     init {
-        itemView.setOnClickListener(this)
+        containerView.setOnClickListener(this)
     }
 }

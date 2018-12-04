@@ -5,14 +5,14 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.grebnevstudio.musicplayer.R
-import com.grebnevstudio.musicplayer.helpers.baseConfig
 import com.grebnevstudio.musicplayer.ui.main.MainFragment
 
 class AppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(baseConfig.appTheme)
+        //setTheme(baseConfig.appTheme)
+        setTheme(R.style.AppThemeDefault)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.app_activity_container)
+        setContentView(R.layout.container_app_activity)
         //startScreen(MainFragment())
         startScreen(MainFragment())
     }

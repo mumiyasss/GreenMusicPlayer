@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.ui.AppActivity
 import com.grebnevstudio.musicplayer.viewmodel.PlayerViewModel
-import kotlinx.android.synthetic.main.fragment_playlist.view.*
+import kotlinx.android.synthetic.main.ui_fragment_playlist.view.*
 
 class PlaylistFragment : Fragment() {
     private lateinit var songsAdapter: SongsAdapter
@@ -19,7 +19,7 @@ class PlaylistFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val globalView = inflater.inflate(R.layout.fragment_playlist, container, false)
+        val globalView = inflater.inflate(R.layout.ui_fragment_playlist, container, false)
 
         playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
 

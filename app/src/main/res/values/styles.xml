@@ -1,30 +1,13 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppThemeDefault" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:statusBarColor">@color/background_main</item>
+        
+        
         <item name="colorPrimary">@color/colorPrimaryDefault</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkDefault</item>
-        <item name="colorAccent">@color/colorAccentDefault</item>
-    </style>
-
-    <style name="AppThemeDark" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorBackground">@color/backgroundDark</item>
-        <item name="android:colorForeground">@color/colorForegroundDark</item>
-        <item name="colorButtonNormal">@color/colorPrimaryDark</item>
-
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkDark</item>
-        <item name="colorAccent">@color/colorAccentDefault</item>
-    </style>
-
-    <style name="AppThemeAmoled" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorBackground">@color/backgroundAmoled</item>
-        <item name="android:colorForeground">@color/colorForegroundAmoled</item>
-        <item name="colorButtonNormal">@color/button_normal_amoled</item>
-
-        <item name="colorPrimary">@color/colorPrimaryAmoded</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkAmoled</item>
         <item name="colorAccent">@color/colorAccentDefault</item>
     </style>
 

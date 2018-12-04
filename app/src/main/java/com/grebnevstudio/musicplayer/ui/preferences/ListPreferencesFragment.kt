@@ -15,8 +15,8 @@ class ListPreferencesFragment : PreferenceFragmentCompat() {
         preferenceManager.findPreference(APP_THEME).setOnPreferenceChangeListener { _, newValue ->
             (activity as AppActivity).baseConfig.appTheme = when (newValue) {
                 "1" -> R.style.AppThemeDefault
-                "2" -> R.style.AppThemeDark
-                "3" -> R.style.AppThemeAmoled
+                //"2" -> R.style.AppThemeDark
+                //"3" -> R.style.AppThemeAmoled
                 else -> R.style.AppThemeDefault
             }
             (activity as AppActivity).applyNewTheme()
