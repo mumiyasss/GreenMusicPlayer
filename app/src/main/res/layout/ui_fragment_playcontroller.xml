@@ -12,6 +12,31 @@
         tools:context=".ui.main.playcontrol.PlayControlFragment">
 
     <com.gigamole.library.ShadowLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="76dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="76dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.558">
+        <!--app:sl_shadowed="true"-->
+        <!--app:sl_shadow_angle="45"-->
+        <!--app:sl_shadow_radius="2dp"-->
+        <!--app:sl_shadow_distance="2dp"-->
+        <!--app:sl_shadow_color="#88000000"-->
+
+        <ImageView
+                android:elevation="4dp"
+                android:background="@drawable/album_background"
+                android:padding="13dp"
+                android:src="@drawable/ic_music_symbol"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:id="@+id/imageView"/>
+    </com.gigamole.library.ShadowLayout>
+
+    <com.gigamole.library.ShadowLayout
             android:id="@+id/play_pause_btn_layout"
 
             android:layout_marginTop="408dp"
@@ -19,15 +44,16 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
 
-            app:sl_shadowed="true"
-            app:sl_shadow_angle="45"
-            app:sl_shadow_radius="2dp"
-            app:sl_shadow_distance="2dp"
-            app:sl_shadow_color="#88000000"
             android:layout_marginStart="116dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.12">
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.12"
+
+            app:sl_shadowed="true"
+            app:sl_shadow_angle="45"
+            app:sl_shadow_radius="3dp"
+            app:sl_shadow_distance="3dp"
+            app:sl_shadow_color="#88000000">
 
         <ImageButton
                 android:id="@+id/play_pause_btn"
@@ -46,8 +72,8 @@
 
             app:sl_shadowed="true"
             app:sl_shadow_angle="45"
-            app:sl_shadow_radius="2dp"
-            app:sl_shadow_distance="2dp"
+            app:sl_shadow_radius="3dp"
+            app:sl_shadow_distance="3dp"
             app:sl_shadow_color="#88000000">
 
         <ImageButton
@@ -69,10 +95,9 @@
 
             app:sl_shadowed="true"
             app:sl_shadow_angle="45"
-            app:sl_shadow_radius="2dp"
-            app:sl_shadow_distance="2dp"
+            app:sl_shadow_radius="3dp"
+            app:sl_shadow_distance="3dp"
             app:sl_shadow_color="#88000000">
-
 
         <ImageButton
                 android:layout_width="wrap_content"

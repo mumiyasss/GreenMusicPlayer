@@ -13,8 +13,8 @@ class AppActivity : AppCompatActivity() {
         setTheme(R.style.AppThemeDefault)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.container_app_activity)
-        //startScreen(MainFragment())
-        startScreen(MainFragment())
+        if (savedInstanceState == null)
+            startScreen(MainFragment())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -42,5 +42,10 @@ class AppActivity : AppCompatActivity() {
     fun applyNewTheme(): Boolean {
         recreate()
         return true
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState?.putBoolean("isRestoredTag", true)
+        super.onSaveInstanceState(outState)
     }
 }

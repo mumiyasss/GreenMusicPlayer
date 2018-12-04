@@ -13,6 +13,8 @@ import com.grebnevstudio.musicplayer.ui.main.playcontrol.PlayControlFragment
 import com.grebnevstudio.musicplayer.ui.main.playlist.PlaylistFragment
 import kotlinx.android.synthetic.main.container_viewpager.view.*
 
+
+
 class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -23,11 +25,10 @@ class MainFragment : Fragment() {
     }
 
     private class MainFragmentPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
-        override fun getCount(): Int {
-            return PAGE_COUNT
-        }
 
-        override fun getItem(position: Int): Fragment =
+        override fun getCount() = PAGE_COUNT
+
+        override fun getItem(position: Int) =
             when (position) {
                 0 -> PlayControlFragment()
                 1 -> PlaylistFragment()
@@ -39,4 +40,3 @@ class MainFragment : Fragment() {
         }
     }
 }
-

@@ -20,7 +20,6 @@ class PlaylistFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val globalView = inflater.inflate(R.layout.ui_fragment_playlist, container, false)
-
         playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
 
         with(globalView) {
