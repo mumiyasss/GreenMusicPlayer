@@ -1,0 +1,39 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Player.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings" />
+
+    <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Player.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Playlist" />
+
+    <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Player.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear Playlist" />
+
+    <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Player.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Playlist" />
+
+    <View
+            android:layout_width="56dp"
+            android:layout_height="1dp"
+            android:layout_margin="16dp"
+            android:background="#FFF" />
+
+    <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Player.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exit" />
+
+</merge>

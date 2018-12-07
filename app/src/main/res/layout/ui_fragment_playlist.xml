@@ -1,12 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:clipChildren="false"
+             android:clipToPadding="false"
+             android:background="@drawable/background_gradient"
+             tools:context=".ui.main.playlist.PlaylistFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/songs_list"
+    <LinearLayout
+            style="@style/Widget.Playlist.Backdrop"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="88dp">
 
-</LinearLayout>
+        <include layout="@layout/backdrop"/>
+    </LinearLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/app_bar"
+                style="@style/Widget.Player.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="73sp"
+                android:paddingStart="23dp"
+                android:paddingLeft="12dp"
+                android:paddingEnd="20dp"
+                android:paddingRight="12dp"
+                app:contentInsetStart="0dp"
+                app:title="Playlist">
+                <ImageButton
+                        android:id="@+id/expand_icon"
+                        android:background="@color/transparent"
+                        android:src="@drawable/ic_expand_more_black_24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"/>
+
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="73sp"
+            android:padding="33dp"
+            android:background="#FFFBFA"
+            app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/songs_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>

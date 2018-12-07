@@ -13,8 +13,6 @@ import com.grebnevstudio.musicplayer.ui.main.playcontrol.PlayControlFragment
 import com.grebnevstudio.musicplayer.ui.main.playlist.PlaylistFragment
 import kotlinx.android.synthetic.main.container_viewpager.view.*
 
-
-
 class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

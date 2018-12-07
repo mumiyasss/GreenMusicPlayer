@@ -25,6 +25,8 @@ android {
     androidExtensions {
         experimental = true
     }
+    dexOptions {
+    }
 }
 
 dependencies {
@@ -49,13 +51,20 @@ dependencies {
     // use kapt for Kotlin
     // optional - ReactiveStreams support for LiveData
     implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
-    api 'com.android.support:support-media-compat:28'
-    implementation 'com.android.support:preference-v7:28.0.0'
+    api 'androidx.media:media:1.1.0-alpha01'
+    implementation 'androidx.preference:preference:1.1.0-alpha01'
     // Dagger 2
     implementation 'com.google.dagger:dagger:2.16'
     kapt 'com.google.dagger:dagger-compiler:2.16'
     //Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1'
+    // Shadow layout
     implementation 'com.github.devlight.shadowlayout:library:1.0.2'
+    // Design
+    implementation 'com.google.android.material:material:1.0.0'
+
+
+
+
 }
