@@ -12,6 +12,7 @@ import com.grebnevstudio.musicplayer.db.SongsDao
 import com.grebnevstudio.musicplayer.helpers.AUDIO_MIME
 import com.grebnevstudio.musicplayer.helpers.CHOOSE_TRACK_STUB
 import com.grebnevstudio.musicplayer.helpers.asyncOnMainThread
+import com.grebnevstudio.musicplayer.helpers.getTrackName
 import com.grebnevstudio.musicplayer.service.PlayerServiceConnection
 import javax.inject.Inject
 
@@ -40,7 +41,7 @@ class PlayerViewModel : ViewModel() {
                         songsDao.insert(
                             Song(
                                 path = file.uri.toString(),
-                                name = file.name ?: "UNKNOWN"
+                                name = getTrackName(file.name)
                             )
                         )
                     }

@@ -10,3 +10,6 @@ fun asyncOnMainThread(myFun: suspend CoroutineScope.() -> Unit) {
         myFun()
     }
 }
+
+fun getTrackName(fileName: String?) =
+    fileName?.substring(0, fileName.lastIndexOf('.')) ?: UNKNOWN

@@ -18,6 +18,7 @@ const val DB_FILE_NAME = "songsToPlay.db"
 const val AUDIO_MIME = "audio/mpeg"
 const val CHOOSE_TRACK_STUB = "Выберите композицию"
 const val FILE_NOT_FOUND = "File not found"
+const val UNKNOWN = "UNKNOWN"
 
 val openFileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
     addCategory(Intent.CATEGORY_OPENABLE)
