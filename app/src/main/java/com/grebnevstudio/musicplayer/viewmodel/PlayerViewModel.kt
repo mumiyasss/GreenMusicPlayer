@@ -14,9 +14,11 @@ import com.grebnevstudio.musicplayer.helpers.CHOOSE_TRACK_STUB
 import com.grebnevstudio.musicplayer.helpers.asyncOnMainThread
 import com.grebnevstudio.musicplayer.helpers.getTrackName
 import com.grebnevstudio.musicplayer.service.PlayerServiceConnection
+import java.io.Serializable
 import javax.inject.Inject
 
-class PlayerViewModel : ViewModel() {
+// ToDo: diffrent PlayerViewModel instances for different fragments
+class PlayerViewModel : ViewModel(), Serializable {
     @Inject
     lateinit var songsDao: SongsDao
     @Inject

@@ -38,7 +38,7 @@ class ExpandIconClickListener @JvmOverloads internal constructor(
 
         updateIcon(view)
 
-        val translateY = height - 100
+        val translateY = height - 400
 
         val animator = ObjectAnimator.ofFloat(sheet, "translationY", (if (backdropShown) translateY else 0).toFloat())
         animator.duration = 500

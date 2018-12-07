@@ -1,6 +1,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.google.android.material.button.MaterialButton
+            android:id="@+id/settings_btn"
             style="@style/Widget.Player.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -13,10 +14,18 @@
             android:text="Playlist" />
 
     <com.google.android.material.button.MaterialButton
+            android:id="@+id/clear_playlist_btn"
             style="@style/Widget.Player.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Clear Playlist" />
+
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_songs_btn"
+            style="@style/Widget.Player.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add songs" />
 
     <com.google.android.material.button.MaterialButton
             style="@style/Widget.Player.Button.TextButton"

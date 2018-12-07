@@ -1,14 +1,11 @@
 package com.grebnevstudio.musicplayer.ui.main.playcontrol
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.viewmodel.PlayerViewModel
 import kotlinx.android.synthetic.main.ui_fragment_playcontroller.view.*
@@ -22,7 +19,7 @@ class PlayControlFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val globalView = inflater.inflate(R.layout.ui_fragment_playcontroller, container, false)
-        playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
+        playerViewModel = arguments!!.getSerializable(ARG_VIEW_MODEL_ID) as PlayerViewModel
 
         with(globalView) {
             playerViewModel.isPlaying.observe(this@PlayControlFragment, Observer { isPlaying ->
@@ -42,36 +39,20 @@ class PlayControlFragment : Fragment() {
             previous_btn.setOnClickListener {
                 playerViewModel.playPrevious()
             }
-//            stop_service_btn.setOnClickListener {
-//                //playerViewModel.playNext()
-//            }
-//            pref_btn.setOnClickListener {
-//                (activity as AppActivity).startScreen(MainPreferencesFragment())
-//            }
-//            open_folder_btn.setOnClickListener {
-//                startActivityForResult(
-//                    openFolderIntent,
-//                    UPLOAD_FOLDER_CODE
-//                )
-//            }
-//            clear_song_list_btn.setOnClickListener {
-//                playerViewModel.clearPlaylist()
-//            }
         }
         return globalView
     }
 
-    override fun onActivityResult(reqCode: Int, resCode: Int, resultData: Intent?) {
-        if (resCode == Activity.RESULT_OK && resultData != null) {
-            resultData.data?.let { responseUri ->
-                when (reqCode) {
-                    UPLOAD_FOLDER_CODE -> playerViewModel.uploadNewFolder(treeUri = responseUri)
-                }
-            }
+    companion object {
+        private const val ARG_VIEW_MODEL_ID = "vm"
+
+        fun newInstance(viewModel: PlayerViewModel): PlayControlFragment {
+            val args = Bundle()
+            args.putSerializable(ARG_VIEW_MODEL_ID, viewModel)
+            val fragment = PlayControlFragment()
+            fragment.arguments = args
+            return fragment
         }
     }
 
-    companion object {
-        const val UPLOAD_FOLDER_CODE = 98
-    }
 }

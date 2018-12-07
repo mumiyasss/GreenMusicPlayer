@@ -5,7 +5,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.grebnevstudio.musicplayer.R
-import com.grebnevstudio.musicplayer.ui.main.MainFragment
+import com.grebnevstudio.musicplayer.ui.main.MainViewPagerFragment
 
 class AppActivity : AppCompatActivity() {
     private val fragmentContainerId = R.id.fragment_container
@@ -15,7 +15,7 @@ class AppActivity : AppCompatActivity() {
         setTheme(R.style.AppThemeDefault)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.container_app_activity)
-        setupFirstFragmentIfNeeded(MainFragment())
+        setupFirstFragmentIfNeeded(MainViewPagerFragment())
     }
 
     private fun setupFirstFragmentIfNeeded(screenToLaunch: Fragment) {
