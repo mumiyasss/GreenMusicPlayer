@@ -16,36 +16,42 @@
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="76dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.558">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.481"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/play_pause_btn_layout"
+            app:layout_constraintVertical_bias="0.124"
+            android:id="@+id/shadowLayout2">
 
         <ImageView
                 android:elevation="4dp"
                 android:background="@drawable/album_background"
                 android:padding="13dp"
                 android:src="@drawable/ic_music_symbol"
-                android:layout_width="230dp"
-                android:layout_height="230dp"
+                android:layout_width="260dp"
+                android:layout_height="260dp"
                 android:id="@+id/imageView"/>
     </com.gigamole.library.ShadowLayout>
 
     <com.gigamole.library.ShadowLayout
             android:id="@+id/play_pause_btn_layout"
 
-            android:layout_marginTop="408dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
 
             android:layout_marginStart="116dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.177"
 
             app:sl_shadowed="true"
             app:sl_shadow_angle="45"
             app:sl_shadow_radius="3dp"
             app:sl_shadow_distance="3dp"
-            app:sl_shadow_color="#88000000">
+            app:sl_shadow_color="#88000000"
+            android:layout_marginBottom="68dp"
+            app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageButton
                 android:id="@+id/play_pause_btn"
@@ -106,9 +112,9 @@
             android:id="@+id/active_song_title"
             app:layout_constraintStart_toStartOf="@+id/play_pause_btn_layout"
             app:layout_constraintEnd_toEndOf="@+id/play_pause_btn_layout"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="24dp"
             app:layout_constraintBottom_toTopOf="@+id/play_pause_btn_layout"
-            app:layout_constraintHorizontal_bias="0.459"
+            app:layout_constraintHorizontal_bias="0.493"
             android:textStyle="italic"
             android:textSize="18sp"
     />
@@ -116,11 +122,15 @@
             android:layout_width="280dp"
             android:layout_height="18dp"
             android:id="@+id/seekBar"
-            android:layout_marginBottom="28dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/active_song_title"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="56dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="56dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="56dp"
+            app:layout_constraintHorizontal_bias="0.375"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/shadowLayout2"/>
     <TextView
             android:text="1:44"
             android:layout_width="wrap_content"
