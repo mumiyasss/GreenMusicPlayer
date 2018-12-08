@@ -12,6 +12,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Binder
 import androidx.core.app.NotificationCompat
+import androidx.lifecycle.MutableLiveData
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.db.Song
 import com.grebnevstudio.musicplayer.helpers.*
@@ -20,7 +21,8 @@ import com.grebnevstudio.musicplayer.ui.main.playcontrol.PlayControlFragment
 import java.io.IOException
 
 class PlayerService : Service() {
-    private var activeSong: Song? = null
+
+    private var activeSong = MutableLiveData<Song>()
     private var songsToPlay: List<Song> = ArrayList()
 
     private val mediaPlayer by lazy {
@@ -40,7 +42,7 @@ class PlayerService : Service() {
     }
 
     private fun next(indexShift: Int = 1) {
-        val indexOfSongToPlay = songsToPlay.indexOf(activeSong) + indexShift
+        val indexOfSongToPlay = songsToPlay.indexOf(activeSong.value) + indexShift
         if (songsToPlay.size > indexOfSongToPlay && indexOfSongToPlay >= 0) {
             playOrPauseSong(songsToPlay[indexOfSongToPlay])
         }
@@ -56,19 +58,19 @@ class PlayerService : Service() {
                     mediaPlayer.reset()
                 }
                 mediaPlayer.setDataSource(this, Uri.parse(song.path))
-                activeSong = song
+                activeSong.value = song
                 playOrPause()
             }
         } catch (e: IOException) {
             showToast(FILE_NOT_FOUND)
-            activeSong = null
+            activeSong.value = null
             prepared = false
             mediaPlayer.reset()
         }
     }
 
     private fun playOrPause() {
-        if(activeSong != null) {
+        if(activeSong.value != null) {
             setup()
             with(mediaPlayer) {
                 if (isPlaying)

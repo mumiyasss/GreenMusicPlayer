@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.net.Uri
 import androidx.documentfile.provider.DocumentFile
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.grebnevstudio.musicplayer.MusicPlayerApp
@@ -52,20 +53,21 @@ class PlayerViewModel : ViewModel(), Serializable {
         }
     }
 
-    private fun updateIsPlayingStatus() {
-        asyncOnMainThread {
-            serviceConnection.initServiceIfNeeded()
-            // Todo: Точно ли нельзя переделать на LiveData
-            isPlaying.value = serviceConnection.playerBinder.isPlaying()
-            serviceConnection.playerBinder.getActiveSong()?.let { song ->
-                activeSongTitle.value = song.name
-            }
-        }
+    suspend fun getActiveSong(): LiveData<Song> {
+        serviceConnection.initServiceIfNeeded()
+        return serviceConnection.playerBinder.getActiveSong()
     }
 
     fun clearPlaylist() {
         songsDao.deleteAll()
         activeSongTitle.value = CHOOSE_TRACK_STUB
+    }
+
+    fun onSongsSetChanged(songs: List<Song>) {
+        asyncOnMainThread {
+            serviceConnection.initServiceIfNeeded()
+            serviceConnection.playerBinder.setSongsList(songs)
+        }
     }
 
     fun playOrPauseSong(song: Song? = null) {
@@ -76,13 +78,6 @@ class PlayerViewModel : ViewModel(), Serializable {
             song?.let {
                 activeSongTitle.value = song.name
             }
-        }
-    }
-
-    fun onSongsSetChanged(songs: List<Song>) {
-        asyncOnMainThread {
-            serviceConnection.initServiceIfNeeded()
-            serviceConnection.playerBinder.setSongsList(songs)
         }
     }
 
@@ -99,6 +94,13 @@ class PlayerViewModel : ViewModel(), Serializable {
             serviceConnection.initServiceIfNeeded()
             serviceConnection.playerBinder.previous()
             updateIsPlayingStatus()
+        }
+    }
+
+    private fun updateIsPlayingStatus() {
+        asyncOnMainThread {
+            serviceConnection.initServiceIfNeeded()
+            isPlaying.value = serviceConnection.playerBinder.isPlaying()
         }
     }
 

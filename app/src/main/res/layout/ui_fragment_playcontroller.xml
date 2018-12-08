@@ -17,11 +17,9 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="76dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.481"
+            app:layout_constraintHorizontal_bias="0.488"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/play_pause_btn_layout"
-            app:layout_constraintVertical_bias="0.124"
-            android:id="@+id/shadowLayout2">
+            app:layout_constraintBottom_toTopOf="@+id/play_pause_btn_layout" app:layout_constraintVertical_bias="0.0">
 
         <ImageView
                 android:elevation="4dp"
@@ -43,14 +41,14 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.177"
+            app:layout_constraintHorizontal_bias="0.119"
 
             app:sl_shadowed="true"
             app:sl_shadow_angle="45"
             app:sl_shadow_radius="3dp"
             app:sl_shadow_distance="3dp"
             app:sl_shadow_color="#88000000"
-            android:layout_marginBottom="68dp"
+            android:layout_marginBottom="40dp"
             app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageButton
@@ -128,9 +126,7 @@
             android:layout_marginStart="56dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="56dp"
-            app:layout_constraintHorizontal_bias="0.375"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/shadowLayout2"/>
+            app:layout_constraintHorizontal_bias="0.375"/>
     <TextView
             android:text="1:44"
             android:layout_width="wrap_content"
