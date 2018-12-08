@@ -16,7 +16,6 @@ import androidx.lifecycle.MutableLiveData
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.db.Song
 import com.grebnevstudio.musicplayer.helpers.*
-import com.grebnevstudio.musicplayer.reciever.ControlActionsListener
 import com.grebnevstudio.musicplayer.ui.main.playcontrol.PlayControlFragment
 import java.io.IOException
 
@@ -75,7 +74,6 @@ class PlayerService : Service() {
 
     private fun playOrPause() {
         if(activeSong.value != null) {
-            setup()
             with(mediaPlayer) {
                 if (isPlaying)
                     pause()
@@ -87,8 +85,9 @@ class PlayerService : Service() {
                     start()
                 }
             }
+            updateIsPlaying()
+            setupNotification()
         } else showToast(FILE_NOT_FOUND)
-        updateIsPlaying()
     }
 
     private val mBinder = PlayerServiceBinder()
@@ -107,8 +106,14 @@ class PlayerService : Service() {
 
     override fun onBind(intent: Intent) = mBinder
 
-    private fun setup() {
-        setupNotification()
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        logg("in onStartCommand")
+        when(intent.action) {
+            ACTION_PLAY_PAUSE -> playOrPause()
+            ACTION_NEXT -> next()
+            ACTION_PREVIOUS -> previous()
+        }
+        return START_NOT_STICKY
     }
 
     private fun setupNotification() {
@@ -120,14 +125,14 @@ class PlayerService : Service() {
             else android.R.drawable.ic_media_play
 
         createNotificationChannel(this)
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID).run {
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID).apply {
             setWhen(System.currentTimeMillis())
             setSmallIcon(R.drawable.album)
-            setContentTitle("Imperial")
+            setContentTitle(activeSong.value?.name)
             setContentText("Porchy, ЛСП, Oxxxymiron")
             setOngoing(true)
             setContentIntent(getContentIntent())
-            setUsesChronometer(true)
+            //setUsesChronometer(true)
             setLargeIcon(largeIconBitmap)
             priority = if (isOreoPlus()) NotificationManager.IMPORTANCE_HIGH else NotificationCompat.PRIORITY_HIGH
             setStyle(
@@ -136,13 +141,11 @@ class PlayerService : Service() {
                     .setShowCancelButton(true)
                 //.setMediaSession(mediaSession?.sessionToken)
             )
-            // TODO: actions are not working
             addAction(android.R.drawable.ic_media_previous, "Previous", getActionIntent(ACTION_PREVIOUS))
             addAction(playOrPauseButton, "Play / Pause", getActionIntent(ACTION_PLAY_PAUSE))
             addAction(android.R.drawable.ic_media_next, "Next", getActionIntent(ACTION_NEXT))
-            build()
         }
-        startForeground(1, notification)
+        startForeground(1, notification.build())
     }
 
     private fun getContentIntent(): PendingIntent {
@@ -151,9 +154,9 @@ class PlayerService : Service() {
     }
 
     private fun getActionIntent(action: String): PendingIntent {
-        val intent = Intent(this, ControlActionsListener::class.java)
+        val intent = Intent(this, PlayerService::class.java)
         intent.action = action
-        return PendingIntent.getBroadcast(this, 0, intent, 0)
+        return PendingIntent.getService(applicationContext, 0, intent, 0)
     }
 
     private fun stopForegroundService() {

@@ -1,19 +1,7 @@
 package com.grebnevstudio.musicplayer.helpers
 
 import android.content.Context
-import android.content.Intent
 import android.widget.Toast
-import com.grebnevstudio.musicplayer.service.PlayerService
-
-fun Context.sendIntent(action: String) {
-    Intent(this, PlayerService::class.java).apply {
-        this.action = action
-        try {
-            startService(this@apply)
-        } catch (ignored: Exception) {
-        }
-    }
-}
 
 fun Context.showToast(message: String) =
     Toast.makeText(
@@ -23,7 +11,6 @@ fun Context.showToast(message: String) =
 
 
 fun Context.getSharedPrefs() = getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
-
 
 val Context.baseConfig: BaseConfig get() = BaseConfig(this)
 

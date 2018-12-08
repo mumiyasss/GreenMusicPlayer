@@ -1,5 +1,6 @@
 package com.grebnevstudio.musicplayer.helpers
 
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -13,3 +14,8 @@ fun asyncOnMainThread(myFun: suspend CoroutineScope.() -> Unit) {
 
 fun getTrackName(fileName: String?) =
     fileName?.substring(0, fileName.lastIndexOf('.')) ?: UNKNOWN
+
+///---  Only for Debug  ---///
+fun logg(string: String) {
+    Log.d("DDDD", string)
+}
