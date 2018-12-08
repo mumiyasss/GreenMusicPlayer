@@ -35,7 +35,11 @@ class PlayerService : Service() {
         }
     }
     private var prepared = false
-    private fun isPlaying() = mediaPlayer.isPlaying
+
+    private val isPlaying = MutableLiveData<Boolean>()
+    private fun updateIsPlaying() {
+        isPlaying.value = mediaPlayer.isPlaying
+    }
 
     private fun previous() {
         next(indexShift = -1)
@@ -84,12 +88,13 @@ class PlayerService : Service() {
                 }
             }
         } else showToast(FILE_NOT_FOUND)
+        updateIsPlaying()
     }
 
     private val mBinder = PlayerServiceBinder()
 
     inner class PlayerServiceBinder : Binder() {
-        fun isPlaying(): Boolean = this@PlayerService.isPlaying()
+        fun isPlaying() = this@PlayerService.isPlaying
         fun next() = this@PlayerService.next()
         fun previous() = this@PlayerService.previous()
         fun playOrPauseSong(song: Song?) = this@PlayerService.playOrPauseSong(song)
@@ -110,9 +115,9 @@ class PlayerService : Service() {
         val largeIconBitmap = BitmapFactory.decodeResource(resources, R.drawable.album)
 
         val playOrPauseButton =
-            if (isPlaying())
-                android.R.drawable.ic_media_play
-            else android.R.drawable.ic_media_pause
+            if (isPlaying.value == true)
+                android.R.drawable.ic_media_pause
+            else android.R.drawable.ic_media_play
 
         createNotificationChannel(this)
         val notification = NotificationCompat.Builder(this, CHANNEL_ID).run {
@@ -131,6 +136,7 @@ class PlayerService : Service() {
                     .setShowCancelButton(true)
                 //.setMediaSession(mediaSession?.sessionToken)
             )
+            // TODO: actions are not working
             addAction(android.R.drawable.ic_media_previous, "Previous", getActionIntent(ACTION_PREVIOUS))
             addAction(playOrPauseButton, "Play / Pause", getActionIntent(ACTION_PLAY_PAUSE))
             addAction(android.R.drawable.ic_media_next, "Next", getActionIntent(ACTION_NEXT))

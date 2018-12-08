@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.grebnevstudio.musicplayer.ExpandIconClickListener
 import com.grebnevstudio.musicplayer.R
@@ -28,7 +29,7 @@ class PlaylistFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val globalView = inflater.inflate(R.layout.ui_fragment_playlist, container, false)
-        playerViewModel = arguments!!.getSerializable(ARG_VIEW_MODEL_ID) as PlayerViewModel
+        playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
 
         with(globalView) {
             (activity as AppCompatActivity).setSupportActionBar(app_bar)
@@ -90,15 +91,6 @@ class PlaylistFragment : Fragment() {
 
     companion object {
         private const val UPLOAD_FOLDER_CODE = 98
-        private const val ARG_VIEW_MODEL_ID = "vm"
-
-        fun newInstance(viewModel: PlayerViewModel): PlaylistFragment {
-            val args = Bundle()
-            args.putSerializable(ARG_VIEW_MODEL_ID, viewModel)
-            val fragment = PlaylistFragment()
-            fragment.arguments = args
-            return fragment
-        }
     }
 }
 
