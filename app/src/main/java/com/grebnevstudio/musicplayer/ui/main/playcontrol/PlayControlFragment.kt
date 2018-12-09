@@ -32,6 +32,7 @@ class PlayControlFragment : Fragment() {
                 })
                 playerViewModel.getActiveSong().observe(this@PlayControlFragment, Observer { song ->
                     active_song_title.text = song.title
+                    active_song_artist.text = song.artist
                 })
             }
             play_pause_btn.setOnClickListener {
