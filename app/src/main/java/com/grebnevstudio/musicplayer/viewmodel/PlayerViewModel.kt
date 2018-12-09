@@ -41,7 +41,7 @@ class PlayerViewModel : ViewModel() {
         }
     }
 
-    suspend fun isPlayingStatus(): LiveData<Boolean> {
+    suspend fun playingStatus(): LiveData<Boolean> {
         serviceConnection.initServiceIfNeeded()
         return serviceConnection.playerBinder.isPlaying()
     }
