@@ -3,7 +3,7 @@
     <!-- Default theme -->
     <color name="colorPrimaryDefault">#4caf50</color>
     <color name="colorPrimaryDarkDefault">#388e3c</color>
-    <color name="colorAccentDefault">#ff5722</color>
+    <color name="colorAccentDefault">#43A047</color>
 
     <!-- NEW COLORS -->
     <color name="background_main">#9DDE9C</color>

@@ -124,28 +124,33 @@
             android:layout_width="280dp"
             android:layout_height="18dp"
             android:id="@+id/seekBar"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/active_song_title"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="56dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="56dp"
-            app:layout_constraintHorizontal_bias="0.526"/>
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="56dp"/>
     <TextView
             android:text="1:44"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView"
             app:layout_constraintEnd_toStartOf="@+id/seekBar"
-            app:layout_constraintTop_toTopOf="@+id/seekBar"/>
+            app:layout_constraintTop_toTopOf="@+id/seekBar"
+
+            android:textSize="12sp"
+            android:textColor="#000"
+            app:layout_constraintBottom_toBottomOf="@+id/seekBar"/>
     <TextView
             android:text="3:52"
             android:layout_width="wrap_content"
-            android:layout_height="18dp"
+            android:layout_height="wrap_content"
             android:id="@+id/textView2"
             app:layout_constraintTop_toTopOf="@+id/seekBar"
             app:layout_constraintStart_toEndOf="@+id/seekBar"
-    />
+
+            android:textSize="12sp"
+            android:textColor="#000"
+            app:layout_constraintBottom_toBottomOf="@+id/seekBar"/>
     <TextView
             android:text="No Artist"
             android:layout_width="wrap_content"
