@@ -74,7 +74,7 @@ class PlayerService : Service() {
     }
 
     private fun playOrPause() {
-        if(activeSong.value != null) {
+        if (activeSong.value != null) {
             with(mediaPlayer) {
                 if (isPlaying)
                     pause()
@@ -97,6 +97,8 @@ class PlayerService : Service() {
         fun isPlaying() = this@PlayerService.isPlaying
         fun next() = this@PlayerService.next()
         fun previous() = this@PlayerService.previous()
+        fun getCurrentPosition() = this@PlayerService.getCurrentPosition()
+        fun seekTo(seconds: Int) = this@PlayerService.seekTo(seconds)
         fun playOrPauseSong(song: Song? = null) = this@PlayerService.playOrPauseSong(song)
         fun stopService() = this@PlayerService.stopForegroundService()
         fun getActiveSong() = this@PlayerService.activeSong
@@ -105,11 +107,15 @@ class PlayerService : Service() {
         }
     }
 
+    private fun seekTo(seconds: Int) = mediaPlayer.seekTo(seconds * 1000)
+
+    private fun getCurrentPosition() =
+        if (prepared) mediaPlayer.currentPosition / 1000 else 0
+
     override fun onBind(intent: Intent) = mBinder
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        logg("in onStartCommand")
-        when(intent.action) {
+        when (intent.action) {
             ACTION_PLAY_PAUSE -> playOrPause()
             ACTION_NEXT -> next()
             ACTION_PREVIOUS -> previous()
@@ -148,7 +154,6 @@ class PlayerService : Service() {
             addAction(android.R.drawable.ic_media_next, "Next", getActionIntent(ACTION_NEXT))
         }
         startForeground(1, notification.build())
-
     }
 
     private fun getContentIntent(): PendingIntent {

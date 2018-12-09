@@ -20,7 +20,7 @@ class PlayerServiceConnection : ServiceConnection {
      * Before calling implicit get() method, checking that
      * (bounded == true) is required.
      */
-    lateinit var playerBinder: PlayerService.PlayerServiceBinder
+    private lateinit var playerBinder: PlayerService.PlayerServiceBinder
 
     override fun onServiceConnected(className: ComponentName, serviceIBinder: IBinder) {
         playerBinder = serviceIBinder as PlayerService.PlayerServiceBinder
@@ -31,13 +31,18 @@ class PlayerServiceConnection : ServiceConnection {
         bounded = false
     }
 
+    suspend fun getPlayer(): PlayerService.PlayerServiceBinder {
+        initServiceIfNeeded()
+        return playerBinder
+    }
+
     fun disconnectService() {
         bounded = false
         playerBinder.stopService()
         app.unbindService(this)
     }
 
-    suspend fun initServiceIfNeeded() {
+    private suspend fun initServiceIfNeeded() {
         if (!bounded) {
             connectService()
             while (!bounded)

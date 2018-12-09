@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.grebnevstudio.musicplayer.R
+import com.grebnevstudio.musicplayer.extensions.toMinutesSecondsFormat
 import com.grebnevstudio.musicplayer.helpers.asyncOnMainThread
 import com.grebnevstudio.musicplayer.viewmodel.PlayerViewModel
 import kotlinx.android.synthetic.main.ui_fragment_playcontroller.view.*
@@ -33,6 +35,12 @@ class PlayControlFragment : Fragment() {
                 playerViewModel.getActiveSong().observe(this@PlayControlFragment, Observer { song ->
                     active_song_title.text = song.title
                     active_song_artist.text = song.artist
+                    active_song_duration.text = song.duration.toMinutesSecondsFormat()
+                    seek_bar.max = song.duration
+                })
+                playerViewModel.currentPosition.observe(this@PlayControlFragment, Observer { position ->
+                    seek_bar.progress = position
+                    how_long_is_playing.text = position.toMinutesSecondsFormat()
                 })
             }
             play_pause_btn.setOnClickListener {
@@ -44,6 +52,15 @@ class PlayControlFragment : Fragment() {
             previous_btn.setOnClickListener {
                 playerViewModel.playPrevious()
             }
+            seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onStopTrackingTouch(seekBar: SeekBar) {}
+
+                override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                    if (fromUser) playerViewModel.seekTo(progress)
+                }
+            })
         }
         return globalView
     }

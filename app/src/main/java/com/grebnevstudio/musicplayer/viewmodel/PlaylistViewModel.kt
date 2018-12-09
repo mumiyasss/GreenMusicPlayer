@@ -22,15 +22,13 @@ class PlaylistViewModel : ViewModel() {
 
     fun onSongsSetChanged(songs: List<Song>) {
         asyncOnMainThread {
-            serviceConnection.initServiceIfNeeded()
-            serviceConnection.playerBinder.setSongsList(songs)
+            serviceConnection.getPlayer().setSongsList(songs)
         }
     }
 
     fun playOrPauseSong(song: Song) {
         asyncOnMainThread {
-            serviceConnection.initServiceIfNeeded()
-            serviceConnection.playerBinder.playOrPauseSong(song)
+            serviceConnection.getPlayer().playOrPauseSong(song)
         }
     }
 

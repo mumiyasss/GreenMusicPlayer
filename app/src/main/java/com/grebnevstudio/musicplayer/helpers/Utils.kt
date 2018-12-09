@@ -12,6 +12,12 @@ fun asyncOnMainThread(myFun: suspend CoroutineScope.() -> Unit) {
     }
 }
 
+fun asyncOnBackgroundThread(myFun: suspend CoroutineScope.() -> Unit) {
+    GlobalScope.launch(Dispatchers.IO) {
+        myFun()
+    }
+}
+
 fun getTrackName(fileName: String?) =
     fileName?.substring(0, fileName.lastIndexOf('.')) ?: UNKNOWN
 
