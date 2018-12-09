@@ -48,6 +48,7 @@ class SongViewHolder(
     fun bind(songToBind: Song) {
         song = songToBind
         song_title.text = song.title
+        song_artist.text = song.artist
     }
 
     override fun onClick(itemView: View) {

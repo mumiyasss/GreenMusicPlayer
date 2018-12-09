@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
     <TextView
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="Arial"
-            android:textSize="20sp"
+            android:textSize="21sp"
             android:textColor="#000"
-            android:textStyle="italic"
+            android:textStyle="normal"
             android:id="@+id/song_title"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+    <TextView
+            android:fontFamily="Arial"
+            android:textStyle="italic"
+            android:textSize="13sp"
+            android:textColor="#000"
+            android:id="@+id/song_artist"
             android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 </LinearLayout>
