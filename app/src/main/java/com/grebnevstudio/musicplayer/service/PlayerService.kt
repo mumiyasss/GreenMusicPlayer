@@ -15,6 +15,7 @@ import androidx.core.app.NotificationCompat
 import androidx.lifecycle.MutableLiveData
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.db.Song
+import com.grebnevstudio.musicplayer.extensions.showToast
 import com.grebnevstudio.musicplayer.helpers.*
 import com.grebnevstudio.musicplayer.ui.main.playcontrol.PlayControlFragment
 import java.io.IOException
@@ -96,7 +97,7 @@ class PlayerService : Service() {
         fun isPlaying() = this@PlayerService.isPlaying
         fun next() = this@PlayerService.next()
         fun previous() = this@PlayerService.previous()
-        fun playOrPauseSong(song: Song?) = this@PlayerService.playOrPauseSong(song)
+        fun playOrPauseSong(song: Song? = null) = this@PlayerService.playOrPauseSong(song)
         fun stopService() = this@PlayerService.stopForegroundService()
         fun getActiveSong() = this@PlayerService.activeSong
         fun setSongsList(songs: List<Song>) {
@@ -128,10 +129,11 @@ class PlayerService : Service() {
         val notification = NotificationCompat.Builder(this, CHANNEL_ID).apply {
             setWhen(System.currentTimeMillis())
             setSmallIcon(R.drawable.album)
-            setContentTitle(activeSong.value?.name)
+            setContentTitle(activeSong.value?.title)
             setContentText("Porchy, ЛСП, Oxxxymiron")
             setOngoing(true)
             setContentIntent(getContentIntent())
+            // TODO: chronometer is not stopping
             //setUsesChronometer(true)
             setLargeIcon(largeIconBitmap)
             priority = if (isOreoPlus()) NotificationManager.IMPORTANCE_HIGH else NotificationCompat.PRIORITY_HIGH
@@ -146,6 +148,7 @@ class PlayerService : Service() {
             addAction(android.R.drawable.ic_media_next, "Next", getActionIntent(ACTION_NEXT))
         }
         startForeground(1, notification.build())
+
     }
 
     private fun getContentIntent(): PendingIntent {

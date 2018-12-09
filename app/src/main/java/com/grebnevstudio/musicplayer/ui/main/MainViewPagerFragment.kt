@@ -7,16 +7,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.ViewModelProviders
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.ui.AppActivity
 import com.grebnevstudio.musicplayer.ui.main.playcontrol.PlayControlFragment
 import com.grebnevstudio.musicplayer.ui.main.playlist.PlaylistFragment
+import com.grebnevstudio.musicplayer.viewmodel.GlobalViewModel
 import kotlinx.android.synthetic.main.container_viewpager.view.*
 
 class MainViewPagerFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val globalView = inflater.inflate(R.layout.container_viewpager, container, false)
+
+        val globalViewModel = ViewModelProviders.of(this).get(GlobalViewModel::class.java)
+        globalViewModel.findNewMusic()
+
         globalView.viewpager.adapter =
                 MainFragmentPagerAdapter((activity as AppActivity).supportFragmentManager)
         return globalView

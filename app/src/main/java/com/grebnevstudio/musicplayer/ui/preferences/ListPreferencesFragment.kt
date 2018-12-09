@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.helpers.APP_THEME
-import com.grebnevstudio.musicplayer.helpers.baseConfig
+import com.grebnevstudio.musicplayer.extensions.baseConfig
 import com.grebnevstudio.musicplayer.ui.AppActivity
 
 class ListPreferencesFragment : PreferenceFragmentCompat() {

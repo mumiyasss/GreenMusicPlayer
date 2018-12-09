@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.db.Song
-import com.grebnevstudio.musicplayer.viewmodel.PlayerViewModel
+import com.grebnevstudio.musicplayer.viewmodel.PlaylistViewModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_song_list.*
 
 class SongsAdapter(
     private val hostActivity: Context,
-    private val playerViewModel: PlayerViewModel
+    private val viewModel: PlaylistViewModel
 ) : RecyclerView.Adapter<SongViewHolder>() {
 
     var songs: List<Song> = ArrayList()
@@ -25,7 +25,7 @@ class SongsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         LayoutInflater.from(hostActivity).let { inflater ->
             val itemView = inflater.inflate(R.layout.item_song_list, parent, false)
-            return SongViewHolder(itemView, playerViewModel)
+            return SongViewHolder(itemView, viewModel)
         }
     }
 
@@ -40,18 +40,18 @@ class SongsAdapter(
  */
 class SongViewHolder(
     override val containerView: View,
-    private val playerViewModel: PlayerViewModel
+    private val playlistViewModel: PlaylistViewModel
 ) : RecyclerView.ViewHolder(containerView), View.OnClickListener, LayoutContainer {
 
     private lateinit var song: Song
 
     fun bind(songToBind: Song) {
         song = songToBind
-        song_title.text = song.name
+        song_title.text = song.title
     }
 
     override fun onClick(itemView: View) {
-        playerViewModel.playOrPauseSong(song)
+        playlistViewModel.playOrPauseSong(song)
     }
 
     init {

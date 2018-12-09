@@ -23,6 +23,7 @@ class AppModule {
     @Provides
     fun provideSongsDao(app: Application): SongsDao {
         val db = Room.databaseBuilder(app, SongsDatabase::class.java, DB_FILE_NAME)
+            .fallbackToDestructiveMigration() // ToDo: write migrations
             .allowMainThreadQueries()
             .build()
         return db.songsDao()

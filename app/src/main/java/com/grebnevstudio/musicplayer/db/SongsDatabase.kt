@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.grebnevstudio.musicplayer.helpers.DB_FILE_NAME
 
-@Database(entities = [Song::class], version = 1)
+@Database(entities = [Song::class], version = 2)
 abstract class SongsDatabase : RoomDatabase() {
     abstract fun songsDao(): SongsDao
 

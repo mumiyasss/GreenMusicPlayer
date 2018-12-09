@@ -8,9 +8,17 @@ data class Song(
     @PrimaryKey
     val path: String,
 
-    val name: String
+    val title: String,
+
+    val artist: String,
+
+    val album: String,
+
+    val duration: Int,
+
+    val year: Int
 ) {
     override fun toString(): String {
-        return name
+        return title
     }
 }

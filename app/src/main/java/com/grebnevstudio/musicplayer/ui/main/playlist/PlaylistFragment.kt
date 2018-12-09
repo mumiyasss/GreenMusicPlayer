@@ -1,7 +1,5 @@
 package com.grebnevstudio.musicplayer.ui.main.playlist
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,20 +14,20 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.grebnevstudio.musicplayer.ExpandIconClickListener
 import com.grebnevstudio.musicplayer.R
-import com.grebnevstudio.musicplayer.helpers.openFolderIntent
+import com.grebnevstudio.musicplayer.helpers.logg
 import com.grebnevstudio.musicplayer.ui.AppActivity
 import com.grebnevstudio.musicplayer.ui.preferences.MainPreferencesFragment
-import com.grebnevstudio.musicplayer.viewmodel.PlayerViewModel
+import com.grebnevstudio.musicplayer.viewmodel.PlaylistViewModel
 import kotlinx.android.synthetic.main.backdrop.view.*
 import kotlinx.android.synthetic.main.ui_fragment_playlist.view.*
 
 class PlaylistFragment : Fragment() {
     private lateinit var songsAdapter: SongsAdapter
-    private lateinit var playerViewModel: PlayerViewModel
+    private lateinit var playlistViewModel: PlaylistViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val globalView = inflater.inflate(R.layout.ui_fragment_playlist, container, false)
-        playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
+        playlistViewModel = ViewModelProviders.of(this).get(PlaylistViewModel::class.java)
 
         with(globalView) {
             (activity as AppCompatActivity).setSupportActionBar(app_bar)
@@ -45,26 +43,26 @@ class PlaylistFragment : Fragment() {
 
             songsAdapter = SongsAdapter(
                 activity as AppActivity,
-                playerViewModel
+                playlistViewModel
             )
             songs_list.layoutManager = LinearLayoutManager(activity)
             songs_list.adapter = songsAdapter
 
-            playerViewModel.getSongs().observe(this@PlaylistFragment, Observer { songs ->
-                playerViewModel.onSongsSetChanged(songs)
+            playlistViewModel.getSongs().observe(this@PlaylistFragment, Observer { songs ->
+                playlistViewModel.onSongsSetChanged(songs)
                 songsAdapter.songs = songs
             })
 
             clear_playlist_btn.setOnClickListener {
-                playerViewModel.clearPlaylist()
+                playlistViewModel.clearPlaylist()
             }
 
-            add_songs_btn.setOnClickListener {
-                startActivityForResult(
-                    openFolderIntent,
-                    UPLOAD_FOLDER_CODE
-                )
-            }
+//            add_songs_btn.setOnClickListener {
+//                startActivityForResult(
+//                    openFolderIntent,
+//                    UPLOAD_FOLDER_CODE
+//                )
+//            }
 
             settings_btn.setOnClickListener {
                 (activity as AppActivity).startScreen(MainPreferencesFragment())
@@ -79,15 +77,15 @@ class PlaylistFragment : Fragment() {
         return globalView
     }
 
-    override fun onActivityResult(reqCode: Int, resCode: Int, resultData: Intent?) {
-        if (resCode == Activity.RESULT_OK && resultData != null) {
-            resultData.data?.let { responseUri ->
-                when (reqCode) {
-                    UPLOAD_FOLDER_CODE -> playerViewModel.uploadNewFolder(treeUri = responseUri)
-                }
-            }
-        }
-    }
+//    override fun onActivityResult(reqCode: Int, resCode: Int, resultData: Intent?) {
+//        if (resCode == Activity.RESULT_OK && resultData != null) {
+//            resultData.data?.let { responseUri ->
+//                when (reqCode) {
+//                    UPLOAD_FOLDER_CODE -> playlistViewModel.uploadNewFolder(treeUri = responseUri)
+//                }
+//            }
+//        }
+//    }
 
     companion object {
         private const val UPLOAD_FOLDER_CODE = 98

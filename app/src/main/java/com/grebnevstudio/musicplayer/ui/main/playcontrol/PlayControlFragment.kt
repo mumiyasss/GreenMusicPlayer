@@ -26,10 +26,11 @@ class PlayControlFragment : Fragment() {
         with(globalView) {
             asyncOnMainThread {
                 playerViewModel.isPlayingStatus().observe(this@PlayControlFragment, Observer { isPlaying ->
+                   // Todo: change play/pause icon
                     // play_pause_btn.text = if (isPlaying) getString(R.string.pause) else getString(R.string.play)
                 })
                 playerViewModel.getActiveSong().observe(this@PlayControlFragment, Observer { song ->
-                    active_song_title.text = song.name
+                    active_song_title.text = song.title
                 })
             }
             play_pause_btn.setOnClickListener {
