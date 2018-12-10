@@ -17,15 +17,15 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="76dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="16dp" app:layout_constraintBottom_toTopOf="@+id/seek_bar">
+            android:layout_marginBottom="30dp" app:layout_constraintBottom_toTopOf="@+id/seek_bar">
 
         <ImageView
                 android:elevation="4dp"
                 android:background="@drawable/album_background"
                 android:padding="13dp"
                 android:src="@drawable/ic_music_symbol"
-                android:layout_width="230dp"
-                android:layout_height="234dp"
+                android:layout_width="240dp"
+                android:layout_height="240dp"
                 android:id="@+id/imageView"/>
     </com.gigamole.library.ShadowLayout>
 
@@ -113,14 +113,14 @@
             android:textStyle="bold"
             android:textColor="#000"
             android:textSize="25sp"
-            android:layout_marginBottom="228dp"
+            android:layout_marginBottom="216dp"
             app:layout_constraintBottom_toBottomOf="parent"
     />
     <SeekBar
-            android:layout_width="280dp"
+            android:layout_width="300dp"
             android:layout_height="18dp"
             android:id="@+id/seek_bar"
-            android:layout_marginBottom="28dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/active_song_title"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="56dp"
@@ -160,19 +160,19 @@
             android:textColor="#000"
             android:textSize="18sp"
             app:layout_constraintHorizontal_bias="0.502"
-            android:layout_marginBottom="32dp" app:layout_constraintBottom_toTopOf="@+id/play_pause_btn_layout"/>
+            android:layout_marginBottom="12dp" app:layout_constraintBottom_toTopOf="@+id/play_pause_btn_layout"/>
     <ImageView
             android:src="@drawable/ic_repeat_disabled"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:id="@+id/imageView2"
+            android:id="@+id/repeat_btn"
             app:layout_constraintEnd_toStartOf="@+id/play_pause_btn_layout"
             app:layout_constraintTop_toBottomOf="@+id/play_pause_btn_layout"/>
     <ImageView
-            android:src="@drawable/ic_shuffle_active"
+            android:src="@drawable/ic_shuffle_disabled"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:id="@+id/imageView3"
+            android:id="@+id/shuffle_btn"
             app:layout_constraintTop_toBottomOf="@+id/play_pause_btn_layout"
             app:layout_constraintStart_toEndOf="@+id/play_pause_btn_layout"/>
 

@@ -42,6 +42,16 @@ class PlayControlFragment : Fragment() {
                     seek_bar.progress = position
                     how_long_is_playing.text = position.toMinutesSecondsFormat()
                 })
+                playerViewModel.repeatMode.observe(this@PlayControlFragment, Observer { repeatMode ->
+                    repeat_btn.setImageResource(
+                        if (repeatMode) R.drawable.ic_repeat_active else R.drawable.ic_repeat_disabled
+                    )
+                })
+                playerViewModel.shuffleMode.observe(this@PlayControlFragment, Observer { shuffleMode ->
+                    shuffle_btn.setImageResource(
+                        if (shuffleMode) R.drawable.ic_shuffle_active else R.drawable.ic_shuffle_disabled
+                    )
+                })
             }
             play_pause_btn.setOnClickListener {
                 playerViewModel.playOrPauseSong()
@@ -51,6 +61,12 @@ class PlayControlFragment : Fragment() {
             }
             previous_btn.setOnClickListener {
                 playerViewModel.playPrevious()
+            }
+            shuffle_btn.setOnClickListener {
+                playerViewModel.onShufflePressed()
+            }
+            repeat_btn.setOnClickListener {
+                playerViewModel.onRepeatPressed()
             }
             seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onStopTrackingTouch(seekBar: SeekBar) {}

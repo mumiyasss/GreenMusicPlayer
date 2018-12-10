@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.grebnevstudio.musicplayer.MusicPlayerApp
 import com.grebnevstudio.musicplayer.db.Song
+import com.grebnevstudio.musicplayer.extensions.config
 import com.grebnevstudio.musicplayer.helpers.asyncOnBackgroundThread
 import com.grebnevstudio.musicplayer.helpers.asyncOnMainThread
 import com.grebnevstudio.musicplayer.service.PlayerServiceConnection
@@ -21,6 +22,9 @@ class PlayerViewModel : ViewModel() {
     val currentPosition = MutableLiveData<Int>().apply {
         value = 0
     }
+
+    val shuffleMode = MutableLiveData<Boolean>()
+    val repeatMode = MutableLiveData<Boolean>()
 
     private fun startUpdatingCurrentPosition() {
         asyncOnBackgroundThread {
@@ -62,8 +66,20 @@ class PlayerViewModel : ViewModel() {
         return serviceConnection.getPlayer().isPlaying()
     }
 
+    fun onShufflePressed() {
+        app.config.shuffleMode = !app.config.shuffleMode
+        shuffleMode.value = app.config.shuffleMode
+    }
+
+    fun onRepeatPressed() {
+        app.config.repeatMode = !app.config.repeatMode
+        repeatMode.value = app.config.repeatMode
+    }
+
     init {
         MusicPlayerApp.component.injectPlayerViewModel(this)
         startUpdatingCurrentPosition()
+        shuffleMode.value = app.config.shuffleMode
+        repeatMode.value = app.config.repeatMode
     }
 }

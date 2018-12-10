@@ -11,6 +11,8 @@ const val ACTION_PLAY_PAUSE = "ACTION_PLAY_PAUSE"
 // shared preferences
 const val APP_THEME = "app_theme"
 const val DEFAULT_THEME = R.style.AppThemeDefault
+const val SHUFFLE_MODE = "shuffle_mode"
+const val REPEAT_MODE = "repeat_mode"
 
 // application constants
 const val PREFS_KEY = "Prefs"

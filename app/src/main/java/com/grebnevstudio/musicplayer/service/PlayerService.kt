@@ -15,15 +15,29 @@ import androidx.core.app.NotificationCompat
 import androidx.lifecycle.MutableLiveData
 import com.grebnevstudio.musicplayer.R
 import com.grebnevstudio.musicplayer.db.Song
+import com.grebnevstudio.musicplayer.extensions.config
 import com.grebnevstudio.musicplayer.extensions.showToast
 import com.grebnevstudio.musicplayer.helpers.*
 import com.grebnevstudio.musicplayer.ui.main.playcontrol.PlayControlFragment
 import java.io.IOException
+import java.util.*
+import kotlin.random.Random
 
-class PlayerService : Service() {
+class PlayerService : Service(), MediaPlayer.OnCompletionListener {
 
-    private var activeSong = MutableLiveData<Song>()
+    override fun onCompletion(mp: MediaPlayer?) {
+        when {
+            config.repeatMode ->
+                playOrPauseSong(activeSong.value, addToHistory = false)
+            config.shuffleMode ->
+                shufflePlay()
+            else -> next()
+        }
+    }
+
     private var songsToPlay: List<Song> = ArrayList()
+    private var activeSong = MutableLiveData<Song>()
+    private var playedSongsIndexes = LinkedList<Int>().apply { add(0) }
 
     private val mediaPlayer by lazy {
         MediaPlayer().apply {
@@ -32,6 +46,7 @@ class PlayerService : Service() {
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .build()
             setAudioAttributes(audioAttributes)
+            setOnCompletionListener(this@PlayerService)
         }
     }
     private var prepared = false
@@ -42,17 +57,37 @@ class PlayerService : Service() {
     }
 
     private fun previous() {
-        next(indexShift = -1)
-    }
-
-    private fun next(indexShift: Int = 1) {
-        val indexOfSongToPlay = songsToPlay.indexOf(activeSong.value) + indexShift
-        if (songsToPlay.size > indexOfSongToPlay && indexOfSongToPlay >= 0) {
-            playOrPauseSong(songsToPlay[indexOfSongToPlay])
+        var previousIndex = 0
+        try {
+            previousIndex = playedSongsIndexes.removeLast()
+            playOrPauseSong(songsToPlay[playedSongsIndexes.last()], addToHistory = false)
+        } catch (e: NoSuchElementException) {
+            showToast("No previous elements")
+            playedSongsIndexes.add(previousIndex)
         }
     }
 
-    private fun playOrPauseSong(song: Song?) {
+    private fun next() {
+        if (config.shuffleMode)
+            shufflePlay()
+        else {
+            val nextIndex = playedSongsIndexes.last() + 1
+            if (nextIndex < songsToPlay.size)
+                playOrPauseSong(songsToPlay[nextIndex])
+        }
+    }
+
+    private fun shufflePlay() {
+        var randomIndex = playedSongsIndexes.last()
+        while (randomIndex == playedSongsIndexes.last() && songsToPlay.size != 1) {
+            randomIndex = Random.nextInt(from = 0, until = songsToPlay.size)
+        }
+        playOrPauseSong(
+            songsToPlay[randomIndex]
+        )
+    }
+
+    private fun playOrPauseSong(song: Song?, addToHistory: Boolean = true) {
         try {
             if (song == null)
                 playOrPause()
@@ -63,6 +98,8 @@ class PlayerService : Service() {
                 }
                 mediaPlayer.setDataSource(this, Uri.parse(song.path))
                 activeSong.value = song
+                if (addToHistory)
+                    playedSongsIndexes.add(songsToPlay.indexOf(song))
                 playOrPause()
             }
         } catch (e: IOException) {
