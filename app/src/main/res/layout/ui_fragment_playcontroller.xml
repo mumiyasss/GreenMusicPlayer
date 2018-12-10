@@ -17,9 +17,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="76dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.488"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/play_pause_btn_layout" app:layout_constraintVertical_bias="0.0">
+            android:layout_marginBottom="16dp" app:layout_constraintBottom_toTopOf="@+id/seek_bar">
 
         <ImageView
                 android:elevation="4dp"
@@ -27,7 +25,7 @@
                 android:padding="13dp"
                 android:src="@drawable/ic_music_symbol"
                 android:layout_width="230dp"
-                android:layout_height="230dp"
+                android:layout_height="234dp"
                 android:id="@+id/imageView"/>
     </com.gigamole.library.ShadowLayout>
 
@@ -35,21 +33,20 @@
             android:id="@+id/play_pause_btn_layout"
 
             android:layout_width="wrap_content"
-            android:layout_height="118dp"
+            android:layout_height="wrap_content"
 
-            android:layout_marginStart="116dp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="144dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.119"
 
             app:sl_shadowed="true"
             app:sl_shadow_angle="45"
             app:sl_shadow_radius="3dp"
             app:sl_shadow_distance="3dp"
             app:sl_shadow_color="#88000000"
-            android:layout_marginBottom="24dp"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:layout_marginBottom="52dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="144dp"
+            app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
                 android:id="@+id/play_pause_btn"
@@ -71,7 +68,7 @@
             app:sl_shadow_angle="45"
             app:sl_shadow_radius="3dp"
             app:sl_shadow_distance="3dp"
-            app:sl_shadow_color="#88000000">
+            app:sl_shadow_color="#88000000" android:id="@+id/shadowLayout">
 
         <ImageButton
                 android:layout_width="wrap_content"
@@ -94,7 +91,7 @@
             app:sl_shadow_angle="45"
             app:sl_shadow_radius="3dp"
             app:sl_shadow_distance="3dp"
-            app:sl_shadow_color="#88000000">
+            app:sl_shadow_color="#88000000" android:id="@+id/shadowLayout2">
 
         <ImageButton
                 android:layout_width="wrap_content"
@@ -111,20 +108,19 @@
             android:id="@+id/active_song_title"
             app:layout_constraintStart_toStartOf="@+id/play_pause_btn_layout"
             app:layout_constraintEnd_toEndOf="@+id/play_pause_btn_layout"
-            android:layout_marginBottom="56dp"
-            app:layout_constraintBottom_toTopOf="@+id/play_pause_btn_layout"
-            app:layout_constraintHorizontal_bias="0.493"
 
             android:fontFamily="Arial"
             android:textStyle="bold"
             android:textColor="#000"
             android:textSize="25sp"
+            android:layout_marginBottom="228dp"
+            app:layout_constraintBottom_toBottomOf="parent"
     />
     <SeekBar
             android:layout_width="280dp"
             android:layout_height="18dp"
             android:id="@+id/seek_bar"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="28dp"
             app:layout_constraintBottom_toTopOf="@+id/active_song_title"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="56dp"
@@ -156,8 +152,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/active_song_artist"
-            android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@+id/active_song_title"
             app:layout_constraintEnd_toEndOf="@+id/active_song_title"
             app:layout_constraintStart_toStartOf="@+id/active_song_title"
 
@@ -165,6 +159,21 @@
             android:textStyle="normal"
             android:textColor="#000"
             android:textSize="18sp"
-            app:layout_constraintHorizontal_bias="0.497"/>
+            app:layout_constraintHorizontal_bias="0.502"
+            android:layout_marginBottom="32dp" app:layout_constraintBottom_toTopOf="@+id/play_pause_btn_layout"/>
+    <ImageView
+            android:src="@drawable/ic_repeat_disabled"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/imageView2"
+            app:layout_constraintEnd_toStartOf="@+id/play_pause_btn_layout"
+            app:layout_constraintTop_toBottomOf="@+id/play_pause_btn_layout"/>
+    <ImageView
+            android:src="@drawable/ic_shuffle_active"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/imageView3"
+            app:layout_constraintTop_toBottomOf="@+id/play_pause_btn_layout"
+            app:layout_constraintStart_toEndOf="@+id/play_pause_btn_layout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

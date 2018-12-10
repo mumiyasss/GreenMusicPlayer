@@ -136,7 +136,7 @@ class PlayerService : Service() {
             setWhen(System.currentTimeMillis())
             setSmallIcon(R.drawable.album)
             setContentTitle(activeSong.value?.title)
-            setContentText(activeSong.value?.title)
+            setContentText(activeSong.value?.artist)
             setOngoing(true)
             setContentIntent(getContentIntent())
             // TODO: chronometer is not stopping
