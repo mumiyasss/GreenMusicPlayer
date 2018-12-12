@@ -25,6 +25,7 @@ class PlayControlFragment : Fragment() {
     ): View {
         val globalView = inflater.inflate(R.layout.ui_fragment_playcontroller, container, false)
         playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
+        lifecycle.addObserver(playerViewModel)
 
         with(globalView) {
             asyncOnMainThread {
