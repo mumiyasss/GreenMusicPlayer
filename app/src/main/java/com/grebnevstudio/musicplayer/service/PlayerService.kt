@@ -168,29 +168,43 @@ class PlayerService : Service(), MediaPlayer.OnCompletionListener {
                 android.R.drawable.ic_media_pause
             else android.R.drawable.ic_media_play
 
+        var usesChronometer = false
+        var ongoing = false
+        var howLong = 0L
+        var showWhen = false
+        if (isPlaying.value == true) {
+            howLong = System.currentTimeMillis() - mediaPlayer.currentPosition
+            usesChronometer = true
+            ongoing = true
+            showWhen = true
+        }
+
         createNotificationChannel(this)
         val notification = NotificationCompat.Builder(this, CHANNEL_ID).apply {
-            setWhen(System.currentTimeMillis())
+            setWhen(howLong)
+            setShowWhen(showWhen)
             setSmallIcon(R.drawable.album)
             setContentTitle(activeSong.value?.title)
             setContentText(activeSong.value?.artist)
-            setOngoing(true)
+            setOngoing(ongoing)
             setContentIntent(getContentIntent())
-            // TODO: chronometer is not stopping
-            //setUsesChronometer(true)
+            setUsesChronometer(usesChronometer)
             setLargeIcon(largeIconBitmap)
             priority = if (isOreoPlus()) NotificationManager.IMPORTANCE_HIGH else NotificationCompat.PRIORITY_HIGH
             setStyle(
                 androidx.media.app.NotificationCompat.MediaStyle()
                     .setShowActionsInCompactView(0, 1, 2)
                     .setShowCancelButton(true)
-                //.setMediaSession(mediaSession?.sessionToken)
             )
             addAction(android.R.drawable.ic_media_previous, "Previous", getActionIntent(ACTION_PREVIOUS))
             addAction(playOrPauseButton, "Play / Pause", getActionIntent(ACTION_PLAY_PAUSE))
             addAction(android.R.drawable.ic_media_next, "Next", getActionIntent(ACTION_NEXT))
         }
         startForeground(1, notification.build())
+
+        if (isPlaying.value != true) {
+            stopForeground(false)
+        }
     }
 
     private fun getContentIntent(): PendingIntent {

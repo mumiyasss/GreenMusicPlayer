@@ -24,7 +24,6 @@ class GlobalViewModel : ViewModel() {
 
     fun findNewMusic(handler: PermissionHandler) {
         asyncOnBackgroundThread {
-            songsDao.deleteAll()
             songsDao.insertAll(scanDeviceForMp3Files(handler))
         }
     }

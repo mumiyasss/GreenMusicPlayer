@@ -4,8 +4,8 @@
     <style name="AppThemeDefault" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:statusBarColor">@color/background_main</item>
-        
-        
+        <item name="android:windowBackground">@drawable/background_gradient</item>
+
         <item name="colorPrimary">@color/colorPrimaryDefault</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkDefault</item>
         <item name="colorAccent">@color/colorAccentDefault</item>
