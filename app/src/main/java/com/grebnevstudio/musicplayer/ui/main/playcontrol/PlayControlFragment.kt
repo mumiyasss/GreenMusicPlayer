@@ -1,5 +1,6 @@
 package com.grebnevstudio.musicplayer.ui.main.playcontrol
 
+import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,8 +30,11 @@ class PlayControlFragment : Fragment() {
             asyncOnMainThread {
                 playerViewModel.playingStatus().observe(this@PlayControlFragment, Observer { playing ->
                     play_pause_btn.setImageResource(
-                        if (playing) R.drawable.ic_pause_btn else R.drawable.ic_play_btn
+                        if (playing)
+                            R.drawable.anim_play_to_pause
+                        else R.drawable.anim_pause_to_play
                     )
+                    (play_pause_btn.drawable as Animatable).start()
                 })
                 playerViewModel.getActiveSong().observe(this@PlayControlFragment, Observer { song ->
                     active_song_title.text = song.title

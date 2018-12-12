@@ -1,9 +1,40 @@
-<vector android:height="106dp" android:viewportHeight="106"
-    android:viewportWidth="109" android:width="106dp" xmlns:android="http://schemas.android.com/apk/res/android">
+<vector
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="106dp"
+        android:height="106dp"
+        android:viewportWidth="128"
+        android:viewportHeight="128">
+
+
     <path android:fillColor="#43A047" android:fillType="nonZero"
-        android:pathData="M0,53a54.5,53 0,1 0,109 0a54.5,53 0,1 0,-109 0z"
-        android:strokeColor="#00000000" android:strokeWidth="1"/>
-    <path android:fillColor="#FFFFFF" android:fillType="nonZero"
-        android:pathData="M38.429,25.679l49.151,26.465l-48.859,29.357z"
-        android:strokeColor="#979797" android:strokeWidth="1"/>
+          android:pathData="M64,64m-64,0a64,64 0,1 1,128 0a64,64 0,1 1,-128 0"
+          android:strokeColor="#00000000" android:strokeWidth="1"/>
+
+    <group
+            android:name="play_icon_group_parts"
+            android:pivotX="64"
+            android:pivotY="64"
+            android:scaleX="1"
+            android:scaleY="1">
+
+        <group android:name="play_icon_group_top">
+            <path
+                    android:name="play_icon_top_path_name"
+                    android:pathData="@string/play_icon_upper_path_data"
+                    android:fillColor="#FFF"
+                    android:strokeLineCap="butt"
+                    android:strokeLineJoin="miter"
+                    android:strokeMiterLimit="10"/>
+        </group>
+        <group android:name="play_icon_group_bottom">
+            <path
+                    android:name="play_icon_bottom_path_name"
+                    android:pathData="@string/play_icon_bottom_path_data"
+                    android:fillColor="#FFF"
+                    android:strokeLineCap="butt"
+                    android:strokeLineJoin="miter"
+                    android:strokeMiterLimit="10"/>
+        </group>
+
+    </group>
 </vector>

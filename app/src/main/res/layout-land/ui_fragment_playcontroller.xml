@@ -56,7 +56,7 @@
                 android:id="@+id/play_pause_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_play_btn"
+                app:srcCompat="@drawable/anim_play_to_pause"
                 android:background="@drawable/circle_play_button"/>
 
     </com.gigamole.library.ShadowLayout>

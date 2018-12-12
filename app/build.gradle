@@ -25,6 +25,9 @@ android {
     androidExtensions {
         experimental = true
     }
+    defaultConfig{
+        vectorDrawables.useSupportLibrary = true
+    }
     dexOptions {
     }
 }

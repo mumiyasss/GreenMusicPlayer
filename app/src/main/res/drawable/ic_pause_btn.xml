@@ -1,9 +1,40 @@
-<vector android:height="106dp" android:viewportHeight="106"
-    android:viewportWidth="109" android:width="106dp" xmlns:android="http://schemas.android.com/apk/res/android">
+<vector
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="106dp"
+        android:height="106dp"
+        android:viewportWidth="128"
+        android:viewportHeight="128">
+
     <path android:fillColor="#43A047" android:fillType="nonZero"
-        android:pathData="M0,53a54.5,53 0,1 0,109 0a54.5,53 0,1 0,-109 0z"
-        android:strokeColor="#00000000" android:strokeWidth="1"/>
-    <path android:fillColor="#FFFFFF" android:fillType="nonZero"
-        android:pathData="M62.5,28.5L62.5,78.5L77.5,78.5L77.5,28.5L62.5,28.5ZM32.5,28.5L32.5,78.5L47.5,78.5L47.5,28.5L32.5,28.5Z"
-        android:strokeColor="#979797" android:strokeWidth="1"/>
+          android:pathData="M64,64m-64,0a64,64 0,1 1,128 0a64,64 0,1 1,-128 0"
+          android:strokeColor="#00000000" android:strokeWidth="1"/>
+
+    <group
+            android:name="pause_icon_group_parts"
+            android:pivotX="64"
+            android:pivotY="64"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:rotation="90">
+
+        <group android:name="pause_icon_group_top">
+            <path
+                    android:name="pause_icon_top_path_name"
+                    android:pathData="@string/pause_icon_upper_path_data"
+                    android:fillColor="#FFF"
+                    android:strokeLineCap="butt"
+                    android:strokeLineJoin="miter"
+                    android:strokeMiterLimit="10"/>
+        </group>
+        <group android:name="pause_icon_group_bottom">
+            <path
+                    android:name="pause_icon_bottom_path_name"
+                    android:pathData="@string/pause_icon_bottom_path_data"
+                    android:fillColor="#FFF"
+                    android:strokeLineCap="butt"
+                    android:strokeLineJoin="miter"
+                    android:strokeMiterLimit="10"/>
+        </group>
+
+    </group>
 </vector>
