@@ -22,6 +22,9 @@ const val CHOOSE_TRACK_STUB = "Выберите композицию"
 const val FILE_NOT_FOUND = "File not found"
 const val UNKNOWN = "UNKNOWN"
 
+// permissions
+const val PERMISSION_READ_STORAGE = 0
+
 val openFileIntent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
     addCategory(Intent.CATEGORY_OPENABLE)
     type = "audio/*"

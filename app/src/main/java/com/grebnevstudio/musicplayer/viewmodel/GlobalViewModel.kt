@@ -11,7 +11,9 @@ import com.grebnevstudio.musicplayer.extensions.getFilenameFromPath
 import com.grebnevstudio.musicplayer.extensions.getIntValue
 import com.grebnevstudio.musicplayer.extensions.getStringValue
 import com.grebnevstudio.musicplayer.extensions.showToast
-import com.grebnevstudio.musicplayer.helpers.asyncOnMainThread
+import com.grebnevstudio.musicplayer.helpers.PERMISSION_READ_STORAGE
+import com.grebnevstudio.musicplayer.helpers.asyncOnBackgroundThread
+import com.grebnevstudio.musicplayer.interfaces.PermissionHandler
 import javax.inject.Inject
 
 class GlobalViewModel : ViewModel() {
@@ -20,14 +22,14 @@ class GlobalViewModel : ViewModel() {
     @Inject
     lateinit var app: Application
 
-    fun findNewMusic() {
-        asyncOnMainThread {
+    fun findNewMusic(handler: PermissionHandler) {
+        asyncOnBackgroundThread {
             songsDao.deleteAll()
-            songsDao.insertAll(scanDeviceForMp3Files())
+            songsDao.insertAll(scanDeviceForMp3Files(handler))
         }
     }
 
-    private fun scanDeviceForMp3Files(): List<Song> {
+    private fun scanDeviceForMp3Files(handler: PermissionHandler): List<Song> {
         val selection = MediaStore.Audio.Media.IS_MUSIC + " != 0"
         val projection = arrayOf(
             MediaStore.Audio.Media.TITLE,
@@ -65,7 +67,12 @@ class GlobalViewModel : ViewModel() {
                 }
             }
         } catch (e: SecurityException) {
-            app.showToast("Grant Permission to Read Files")
+            handler.handlePermission(PERMISSION_READ_STORAGE) { hasAccess ->
+                if (hasAccess)
+                    findNewMusic(handler)
+                else
+                    app.showToast("Grant Permission to Read Files")
+            }
         } finally {
             cursor?.close()
         }
