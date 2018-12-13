@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.grebnevstudio.musicplayer.ExpandIconClickListener
 import com.grebnevstudio.musicplayer.R
-import com.grebnevstudio.musicplayer.helpers.logg
+import com.grebnevstudio.musicplayer.interfaces.PermissionHandler
 import com.grebnevstudio.musicplayer.ui.AppActivity
 import com.grebnevstudio.musicplayer.ui.preferences.MainPreferencesFragment
 import com.grebnevstudio.musicplayer.viewmodel.PlaylistViewModel
@@ -28,7 +28,6 @@ class PlaylistFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val globalView = inflater.inflate(R.layout.ui_fragment_playlist, container, false)
         playlistViewModel = ViewModelProviders.of(this).get(PlaylistViewModel::class.java)
-
         with(globalView) {
             (activity as AppCompatActivity).setSupportActionBar(app_bar)
             app_bar.expand_icon.setOnClickListener(
@@ -75,6 +74,11 @@ class PlaylistFragment : Fragment() {
             globalView.nested_scroll_view.background = context?.getDrawable(R.drawable.background_cut_corners)
         }
         return globalView
+    }
+
+    override fun onResume() {
+        super.onResume()
+        playlistViewModel.findNewMusic(activity as PermissionHandler)
     }
 
 //    override fun onActivityResult(reqCode: Int, resCode: Int, resultData: Intent?) {

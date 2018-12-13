@@ -58,8 +58,7 @@ class PlayControlFragment : Fragment() {
                     )
                 })
             }
-            play_pause_btn.setOnClickListener {
-                playerViewModel.playOrPauseSong()
+            play_pause_btn.setOnClickListener { playerViewModel.playOrPauseSong()
             }
             next_btn.setOnClickListener {
                 playerViewModel.playNext()

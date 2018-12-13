@@ -97,7 +97,9 @@ class PlayerViewModel : ViewModel(), LifecycleObserver {
 
     init {
         MusicPlayerApp.component.injectPlayerViewModel(this)
-        shuffleMode.value = app.config.shuffleMode
-        repeatMode.value = app.config.repeatMode
+        asyncOnBackgroundThread {
+            shuffleMode.postValue(app.config.shuffleMode)
+            repeatMode.postValue(app.config.repeatMode)
+        }
     }
 }

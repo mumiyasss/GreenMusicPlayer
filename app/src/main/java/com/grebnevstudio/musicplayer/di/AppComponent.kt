@@ -3,7 +3,6 @@ package com.grebnevstudio.musicplayer.di
 import android.app.Application
 import com.grebnevstudio.musicplayer.service.PlayerServiceConnection
 import com.grebnevstudio.musicplayer.ui.main.playlist.SongViewHolder
-import com.grebnevstudio.musicplayer.viewmodel.GlobalViewModel
 import com.grebnevstudio.musicplayer.viewmodel.PlayerViewModel
 import com.grebnevstudio.musicplayer.viewmodel.PlaylistViewModel
 import dagger.BindsInstance
@@ -23,7 +22,6 @@ interface AppComponent {
 
     fun injectServiceConnection(serviceConnectionObject: PlayerServiceConnection)
     fun injectPlayerViewModel(viewModel: PlayerViewModel)
-    fun injectGlobalViewModel(viewModel: GlobalViewModel)
     fun injectPlaylistViewModel(viewModel: PlaylistViewModel)
     fun injectViewHolder(songViewHolder: SongViewHolder)
 }

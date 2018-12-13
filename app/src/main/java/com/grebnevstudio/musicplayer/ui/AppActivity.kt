@@ -39,7 +39,7 @@ class AppActivity : AppCompatActivity(), PermissionHandler {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_REQUEST_CODE && grantResults.isNotEmpty()) {
-            actionOnPermission?.invoke(grantResults[0] == PERMISSION_GRANTED)
+            actionOnPermission.invoke(grantResults[0] == PERMISSION_GRANTED)
         }
     }
 
