@@ -28,7 +28,8 @@ class AppActivity : AppCompatActivity(), PermissionHandler {
             callback(true)
         } else {
             actionOnPermission = callback
-            ActivityCompat.requestPermissions(this,
+            ActivityCompat.requestPermissions(
+                this,
                 arrayOf(getPermissionString(permissionId)),
                 PERMISSION_REQUEST_CODE
             )
@@ -60,14 +61,15 @@ class AppActivity : AppCompatActivity(), PermissionHandler {
 
     private fun setupFirstFragmentIfNeeded(screenToLaunch: Fragment) {
         if (supportFragmentManager.findFragmentById(fragmentContainerId) == null)
-            startScreen(screenToLaunch)
+            startScreen(screenToLaunch, addToBackStack = false)
     }
 
-    fun startScreen(newFragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(fragmentContainerId, newFragment)
-            .addToBackStack(null)
-            .commit()
+    fun startScreen(newFragment: Fragment, addToBackStack: Boolean = true) {
+        supportFragmentManager.beginTransaction().run {
+            replace(fragmentContainerId, newFragment)
+            if (addToBackStack) addToBackStack(null)
+            commit()
+        }
     }
 
     fun applyNewTheme(): Boolean {
