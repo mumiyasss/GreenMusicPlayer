@@ -25,9 +25,13 @@ class PlaylistFragment : Fragment() {
     private lateinit var songsAdapter: SongsAdapter
     private lateinit var playlistViewModel: PlaylistViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        playlistViewModel = ViewModelProviders.of(this).get(PlaylistViewModel::class.java)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val globalView = inflater.inflate(R.layout.ui_fragment_playlist, container, false)
-        playlistViewModel = ViewModelProviders.of(this).get(PlaylistViewModel::class.java)
         with(globalView) {
             (activity as AppCompatActivity).setSupportActionBar(app_bar)
             app_bar.expand_icon.setOnClickListener(
@@ -46,11 +50,6 @@ class PlaylistFragment : Fragment() {
             )
             songs_list.layoutManager = LinearLayoutManager(activity)
             songs_list.adapter = songsAdapter
-
-            playlistViewModel.getSongs().observe(this@PlaylistFragment, Observer { songs ->
-                playlistViewModel.onSongsSetChanged(songs)
-                songsAdapter.songs = songs
-            })
 
             clear_playlist_btn.setOnClickListener {
                 playlistViewModel.clearPlaylist()
@@ -79,6 +78,11 @@ class PlaylistFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         playlistViewModel.findNewMusic(activity as PermissionHandler)
+
+        playlistViewModel.getSongs().observe(this@PlaylistFragment, Observer { songs ->
+            playlistViewModel.onSongsSetChanged(songs)
+            songsAdapter.songs = songs
+        })
     }
 
 //    override fun onActivityResult(reqCode: Int, resCode: Int, resultData: Intent?) {

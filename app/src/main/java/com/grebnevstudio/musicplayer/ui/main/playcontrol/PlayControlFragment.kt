@@ -17,16 +17,50 @@ import kotlinx.android.synthetic.main.ui_fragment_playcontroller.view.*
 
 class PlayControlFragment : Fragment() {
     private lateinit var playerViewModel: PlayerViewModel
+    private lateinit var globalView: View
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
+        lifecycle.addObserver(playerViewModel)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val globalView = inflater.inflate(R.layout.ui_fragment_playcontroller, container, false)
-        playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel::class.java)
-        lifecycle.addObserver(playerViewModel)
+        globalView = inflater.inflate(R.layout.ui_fragment_playcontroller, container, false)
+        with(globalView) {
+            play_pause_btn.setOnClickListener { playerViewModel.playOrPauseSong()
+            }
+            next_btn.setOnClickListener {
+                playerViewModel.playNext()
+            }
+            previous_btn.setOnClickListener {
+                playerViewModel.playPrevious()
+            }
+            shuffle_btn.setOnClickListener {
+                playerViewModel.onShufflePressed()
+            }
+            repeat_btn.setOnClickListener {
+                playerViewModel.onRepeatPressed()
+            }
+            seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onStopTrackingTouch(seekBar: SeekBar) {}
 
+                override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                    if (fromUser) playerViewModel.seekTo(progress)
+                }
+            })
+        }
+        return globalView
+    }
+
+    override fun onResume() {
+        super.onResume()
         with(globalView) {
             asyncOnMainThread {
                 playerViewModel.playingStatus().observe(this@PlayControlFragment, Observer { playing ->
@@ -58,30 +92,6 @@ class PlayControlFragment : Fragment() {
                     )
                 })
             }
-            play_pause_btn.setOnClickListener { playerViewModel.playOrPauseSong()
-            }
-            next_btn.setOnClickListener {
-                playerViewModel.playNext()
-            }
-            previous_btn.setOnClickListener {
-                playerViewModel.playPrevious()
-            }
-            shuffle_btn.setOnClickListener {
-                playerViewModel.onShufflePressed()
-            }
-            repeat_btn.setOnClickListener {
-                playerViewModel.onRepeatPressed()
-            }
-            seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                override fun onStopTrackingTouch(seekBar: SeekBar) {}
-
-                override fun onStartTrackingTouch(seekBar: SeekBar) {}
-
-                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                    if (fromUser) playerViewModel.seekTo(progress)
-                }
-            })
         }
-        return globalView
     }
 }

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import com.grebnevstudio.musicplayer.MusicPlayerApp
+import com.grebnevstudio.musicplayer.helpers.logg
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
@@ -43,6 +44,7 @@ class PlayerServiceConnection : ServiceConnection {
     }
 
     private suspend fun initServiceIfNeeded() {
+        logg("Service")
         if (!bounded) {
             connectService()
             while (!bounded)

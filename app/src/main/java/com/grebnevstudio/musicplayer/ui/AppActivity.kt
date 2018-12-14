@@ -17,9 +17,8 @@ class AppActivity : AppCompatActivity(), PermissionHandler {
     private var actionOnPermission: ((granted: Boolean) -> Unit) = {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //setTheme(baseConfig.appTheme)
-        setTheme(R.style.AppThemeDefault)
         super.onCreate(savedInstanceState)
+        //setTheme(baseConfig.appTheme)
         setContentView(R.layout.container_app_activity)
         setupFirstFragmentIfNeeded(MainViewPagerFragment())
     }

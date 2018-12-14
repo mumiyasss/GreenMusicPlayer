@@ -11,8 +11,7 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
-            android:theme="@style/AppThemeDefault"
-            android:supportsRtl="true">
+            android:theme="@style/AppThemeDefault">
         <activity android:name=".ui.AppActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

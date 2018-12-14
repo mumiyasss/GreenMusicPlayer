@@ -6,6 +6,7 @@ import androidx.room.Room
 import com.grebnevstudio.musicplayer.db.SongsDao
 import com.grebnevstudio.musicplayer.db.SongsDatabase
 import com.grebnevstudio.musicplayer.helpers.DB_FILE_NAME
+import com.grebnevstudio.musicplayer.helpers.logg
 import com.grebnevstudio.musicplayer.service.PlayerService
 import com.grebnevstudio.musicplayer.service.PlayerServiceConnection
 import dagger.Module
@@ -22,6 +23,7 @@ class AppModule {
     @Singleton
     @Provides
     fun provideSongsDao(app: Application): SongsDao {
+        logg("DATABASE")
         val db = Room.databaseBuilder(app, SongsDatabase::class.java, DB_FILE_NAME)
             .build()
         return db.songsDao()

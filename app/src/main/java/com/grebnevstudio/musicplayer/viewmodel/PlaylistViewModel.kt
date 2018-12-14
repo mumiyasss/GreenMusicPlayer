@@ -16,20 +16,21 @@ import com.grebnevstudio.musicplayer.helpers.asyncOnBackgroundThread
 import com.grebnevstudio.musicplayer.helpers.asyncOnMainThread
 import com.grebnevstudio.musicplayer.interfaces.PermissionHandler
 import com.grebnevstudio.musicplayer.service.PlayerServiceConnection
+import dagger.Lazy
 import javax.inject.Inject
 
 class PlaylistViewModel : ViewModel() {
     @Inject
-    lateinit var songsDao: SongsDao
+    lateinit var songsDao: Lazy<SongsDao>
     @Inject
     lateinit var serviceConnection: PlayerServiceConnection
     @Inject
     lateinit var app: Application
 
-    fun getSongs() = songsDao.getAll()
+    fun getSongs() = songsDao.get().getAll()
 
     fun clearPlaylist() {
-        songsDao.deleteAll()
+        songsDao.get().deleteAll()
     }
 
     fun onSongsSetChanged(songs: List<Song>) {
@@ -46,7 +47,7 @@ class PlaylistViewModel : ViewModel() {
 
     fun findNewMusic(handler: PermissionHandler) {
         asyncOnBackgroundThread {
-            songsDao.insertAll(scanDeviceForMp3Files(handler))
+            songsDao.get().insertAll(scanDeviceForMp3Files(handler))
         }
     }
 
@@ -115,7 +116,7 @@ class PlaylistViewModel : ViewModel() {
 //                        file.isDirectory -> {
 //                        }
 //                        file.type == AUDIO_MIME -> {
-//                            songsDao.insert(
+//                            songsDao.get().insert(
 //                                Song(
 //                                    path = file.uri.toString(),
 //                                    title = getTrackName(file.name)
