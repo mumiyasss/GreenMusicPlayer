@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="play_pause_btn_size">106dp</dimen>
+    <dimen name="next_prev_btn_size">57dp</dimen>
+    <dimen name="next_prev_btn_elevation">8dp</dimen>
+    <dimen name="play_pause_btn_elevation">15dp</dimen>
+</resources>

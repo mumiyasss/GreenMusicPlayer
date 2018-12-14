@@ -10,7 +10,7 @@
 
 
         <ImageView
-                android:elevation="4dp"
+                android:elevation="15dp"
                 android:background="@drawable/album_background"
                 android:padding="13dp"
                 android:src="@drawable/ic_music_symbol"
@@ -38,6 +38,8 @@
                 app:srcCompat="@drawable/anim_play_to_pause"
                 android:background="@drawable/circle_play_button"
 
+                android:elevation="@dimen/play_pause_btn_elevation"
+
                 android:layout_marginBottom="48dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="8dp"
@@ -52,6 +54,8 @@
                 android:src="@drawable/ic_next_btn"
                 android:background="@drawable/circle_next_prev_button"
 
+                android:elevation="@dimen/next_prev_btn_elevation"
+
                 android:id="@+id/next_btn"
                 app:layout_constraintStart_toEndOf="@+id/play_pause_btn"
                 android:layout_marginStart="20dp" android:layout_marginTop="28dp"
@@ -63,6 +67,8 @@
                 android:src="@drawable/ic_prev_btn"
                 android:background="@drawable/circle_next_prev_button"
                 android:id="@+id/previous_btn"
+
+                android:elevation="@dimen/next_prev_btn_elevation"
 
                 app:layout_constraintEnd_toStartOf="@+id/play_pause_btn"
                 android:layout_marginEnd="20dp" android:layout_marginTop="28dp"

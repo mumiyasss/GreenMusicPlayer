@@ -1,11 +1,14 @@
 package com.grebnevstudio.musicplayer.ui.main.playcontrol
 
+import android.graphics.Outline
 import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewOutlineProvider
 import android.widget.SeekBar
+import androidx.annotation.DimenRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -32,7 +35,13 @@ class PlayControlFragment : Fragment() {
     ): View {
         globalView = inflater.inflate(R.layout.ui_fragment_playcontroller, container, false)
         with(globalView) {
-            play_pause_btn.setOnClickListener { playerViewModel.playOrPauseSong()
+            // Setting outline providers for buttons elevation
+            play_pause_btn.outlineProvider = getViewOutlineProvider(R.dimen.play_pause_btn_size)
+            next_btn.outlineProvider = getViewOutlineProvider(R.dimen.next_prev_btn_size)
+            previous_btn.outlineProvider = getViewOutlineProvider(R.dimen.next_prev_btn_size)
+
+            play_pause_btn.setOnClickListener {
+                playerViewModel.playOrPauseSong()
             }
             next_btn.setOnClickListener {
                 playerViewModel.playNext()
@@ -94,4 +103,12 @@ class PlayControlFragment : Fragment() {
             }
         }
     }
+
+    private fun getViewOutlineProvider(@DimenRes sizeResourceId: Int) =
+        object : ViewOutlineProvider() {
+            override fun getOutline(view: View, outline: Outline) {
+                val size = resources.getDimensionPixelSize(sizeResourceId)
+                outline.setOval(0, 0, size, size)
+            }
+        }
 }

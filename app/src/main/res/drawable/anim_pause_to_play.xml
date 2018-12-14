@@ -13,4 +13,6 @@
     <target
             android:name="pause_icon_bottom_path_name"
             android:animation="@animator/bottom_pause_to_play_animation"/>
+
+
 </animated-vector>

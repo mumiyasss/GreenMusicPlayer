@@ -9,7 +9,7 @@
         tools:context=".ui.main.playcontrol.PlayControlFragment">
 
     <ImageView
-            android:elevation="4dp"
+            android:elevation="15dp"
             android:background="@drawable/album_background"
             android:padding="13dp"
             android:src="@drawable/ic_music_symbol"
@@ -32,9 +32,10 @@
             app:srcCompat="@drawable/anim_play_to_pause"
             android:background="@drawable/circle_play_button"
 
+            android:elevation="@dimen/play_pause_btn_elevation"
+
             android:layout_marginEnd="144dp"
             app:layout_constraintEnd_toEndOf="parent"
-
             android:layout_marginBottom="52dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="144dp"
@@ -46,8 +47,10 @@
             android:src="@drawable/ic_next_btn"
             android:background="@drawable/circle_next_prev_button"
 
+            android:elevation="@dimen/next_prev_btn_elevation"
+
             app:layout_constraintStart_toEndOf="@+id/play_pause_btn"
-            android:layout_marginStart="20dp" android:layout_marginTop="28dp"
+            android:layout_marginStart="35dp" android:layout_marginTop="28dp"
             app:layout_constraintTop_toTopOf="@+id/play_pause_btn"
 
             android:id="@+id/next_btn"/>
@@ -57,12 +60,13 @@
             android:background="@drawable/circle_next_prev_button"
             android:id="@+id/previous_btn"
 
+            android:elevation="@dimen/next_prev_btn_elevation"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toStartOf="@+id/play_pause_btn"
-            android:layout_marginEnd="20dp" android:layout_marginTop="28dp"
-            app:layout_constraintTop_toTopOf="@+id/play_pause_btn"
-    />
+            android:layout_marginEnd="35dp" android:layout_marginTop="28dp"
+            app:layout_constraintTop_toTopOf="@+id/play_pause_btn"/>
 
     <TextView
             android:text="Выберите композицию"
