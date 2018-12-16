@@ -32,12 +32,11 @@
                 style="@style/Widget.Player.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="73sp"
-                android:paddingStart="23dp"
-                android:paddingLeft="12dp"
+                android:paddingStart="26dp"
                 android:paddingEnd="20dp"
-                android:paddingRight="12dp"
                 app:contentInsetStart="0dp"
-                app:title="Playlist">
+                app:title="@string/playlist">
+
                 <ImageButton
                         android:id="@+id/expand_icon"
                         android:background="@color/transparent"
@@ -45,7 +44,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"/>
-
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>

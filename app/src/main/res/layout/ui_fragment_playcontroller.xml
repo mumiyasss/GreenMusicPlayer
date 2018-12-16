@@ -69,7 +69,7 @@
             app:layout_constraintTop_toTopOf="@+id/play_pause_btn"/>
 
     <TextView
-            android:text="Выберите композицию"
+            android:text="@string/no_track"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/active_song_title"
@@ -93,7 +93,7 @@
             android:layout_marginStart="56dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="56dp"/>
     <TextView
-            android:text="0:00"
+            android:text="@string/disabled_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/how_long_is_playing"
@@ -104,7 +104,7 @@
             android:textColor="#000"
             app:layout_constraintBottom_toBottomOf="@+id/seek_bar"/>
     <TextView
-            android:text="0:00"
+            android:text="@string/disabled_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/active_song_duration"
@@ -115,7 +115,7 @@
             android:textColor="#000"
             app:layout_constraintBottom_toBottomOf="@+id/seek_bar"/>
     <TextView
-            android:text="No Artist"
+            android:text="@string/no_artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/active_song_artist"
@@ -127,7 +127,7 @@
             android:textColor="#000"
             android:textSize="18sp"
             app:layout_constraintHorizontal_bias="0.502"
-            android:layout_marginBottom="12dp" app:layout_constraintBottom_toTopOf="@+id/play_pause_btn"/>
+            android:layout_marginBottom="24dp" app:layout_constraintBottom_toTopOf="@+id/play_pause_btn"/>
     <ImageView
             android:src="@drawable/ic_repeat_disabled"
             android:layout_width="30dp"
